@@ -2275,7 +2275,11 @@ MonoBehaviour:
       Data: Detective
     - Name: message
       Entry: 1
-      Data: We need go deeper!!
+      Data: 'Oh God!
+
+        This is a Holy Shit!!
+
+        Come and have a photo of it.'
     - Name: dialogType
       Entry: 3
       Data: 0
@@ -2319,7 +2323,9 @@ MonoBehaviour:
       Entry: 1
       Data: 'Yeah!
 
-        Nothing is better'
+        It''s a kind of vital evidence!!
+
+        We can not let our guard down!'
     - Name: dialogType
       Entry: 3
       Data: 0

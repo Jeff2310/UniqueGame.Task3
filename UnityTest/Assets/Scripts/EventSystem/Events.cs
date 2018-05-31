@@ -27,7 +27,7 @@ public class EventDialog : EventBase
 
 
     [TabGroup("Content")]
-    [OdinSerialize]
+    [HideIf("dialogType",DialogType.Monologue)]
     public string characterName = "";
     [TabGroup("Content")]
     [MultiLineProperty(lines: 4)]
@@ -81,6 +81,7 @@ public class EventDialog : EventBase
         }
         return lable;
     }
+
 
 }
 
