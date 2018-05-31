@@ -239,7 +239,7 @@ MonoBehaviour:
     spaceCount: 5
     wordCount: 6
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
@@ -2034,7 +2034,7 @@ Tilemap:
     e33: 1
   m_TileRefreshArray:
   - serializedVersion: 1
-    m_DirtyIndex: 1
+    m_DirtyIndex: 0
 --- !u!1 &995697083
 GameObject:
   m_ObjectHideFlags: 0
@@ -2229,28 +2229,16 @@ MonoBehaviour:
       Data: 0|System.Collections.Generic.List`1[[EventBase, Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 7
-      Data: 1|EventWait, Assembly-CSharp
-    - Name: waitUnit
-      Entry: 3
-      Data: 0
-    - Name: amount
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 2|EventDialog, Assembly-CSharp
+      Data: 1|EventDialog, Assembly-CSharp
     - Name: characterName
       Entry: 1
-      Data: 
+      Data: Rufus
     - Name: message
       Entry: 1
-      Data: 
+      Data: Something is happening
     - Name: dialogType
       Entry: 3
       Data: 0

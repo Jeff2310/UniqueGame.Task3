@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/.Rider2017.3/system/resharper-host/local/Transient/ReSharperHost/v11/SolutionCaches/_2D_Adventure.1652195648.00" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p="2D_Adventure.sln" t="IncludeFlat" />
+      <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Plugins" t="Include">
+          <e p="Editor" t="Include">
+            <e p="JetBrains" t="Include">
+              <e p="Unity3DRider.cs" t="Include" />
+            </e>
+          </e>
+          <e p="MeshDebugger" t="Include">
+            <e p="Editor" t="Include">
+              <e p="IMGizmo.cs" t="Include" />
+              <e p="IMGizmos.cs" t="Include" />
+              <e p="MeshDebugger.cs" t="Include" />
+              <e p="MeshDebugger_GUI.cs" t="Include" />
+              <e p="MeshInfo.cs" t="Include" />
+            </e>
+            <e p="MeshDebuggerProxyUI.cs" t="Include" />
+            <e p="Readme.txt" t="Include" />
+            <e p="Shaders" t="Include">
+              <e p="DebugColor.shader" t="Include" />
+              <e p="DebugFrontBack.shader" t="Include" />
+              <e p="DebugTangent.shader" t="Include" />
+              <e p="DebugUV.shader" t="Include" />
+              <e p="InternalLineColorful.shader" t="Include" />
+              <e p="InternalQuadColorful.shader" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="LevelStructure" t="Include">
+            <e p="Polygon2DToMesh.cs" t="Include" />
+            <e p="StaticNode.cs" t="Include" />
+            <e p="Triangulator.cs" t="Include" />
+          </e>
+          <e p="PlayerMovement" t="Include">
+            <e p="ClickToMove.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="Temp/bin" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
