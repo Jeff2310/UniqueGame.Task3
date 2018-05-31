@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+#if UNITY_EDITOR
+using Sirenix.OdinInspector;
+#endif
 
-
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+public class Singleton<T> : SerializedMonoBehaviour where T : SerializedMonoBehaviour
 {
     private static T _instance;
 

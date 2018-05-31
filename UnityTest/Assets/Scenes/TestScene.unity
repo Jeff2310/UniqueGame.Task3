@@ -273,6 +273,16 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114361767074247334, guid: 0d217cbc5f90e944e851c716d7828488,
+        type: 2}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114361767074247334, guid: 0d217cbc5f90e944e851c716d7828488,
+        type: 2}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4014707101167890, guid: 0d217cbc5f90e944e851c716d7828488, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -305,6 +315,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114391603388986980, guid: 0d217cbc5f90e944e851c716d7828488,
+        type: 2}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 114391603388986980, guid: 0d217cbc5f90e944e851c716d7828488,
+        type: 2}
+    - target: {fileID: 114081550283150422, guid: 0d217cbc5f90e944e851c716d7828488,
+        type: 2}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 114081550283150422, guid: 0d217cbc5f90e944e851c716d7828488,
+        type: 2}
     - target: {fileID: 114081550283150422, guid: 0d217cbc5f90e944e851c716d7828488,
         type: 2}
       propertyPath: dialogBox
@@ -325,6 +347,18 @@ Prefab:
       propertyPath: continueButton
       value: 
       objectReference: {fileID: 1698068810}
+    - target: {fileID: 114517246151528544, guid: 0d217cbc5f90e944e851c716d7828488,
+        type: 2}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 114517246151528544, guid: 0d217cbc5f90e944e851c716d7828488,
+        type: 2}
+    - target: {fileID: 114361767074247334, guid: 0d217cbc5f90e944e851c716d7828488,
+        type: 2}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 114361767074247334, guid: 0d217cbc5f90e944e851c716d7828488,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0d217cbc5f90e944e851c716d7828488, type: 2}
   m_IsPrefabParent: 0
@@ -404,8 +438,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: StartEvent
+      - m_Target: {fileID: 1125708697}
+        m_MethodName: Trigger
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2034,7 +2068,7 @@ Tilemap:
     e33: 1
   m_TileRefreshArray:
   - serializedVersion: 1
-    m_DirtyIndex: 1
+    m_DirtyIndex: 0
 --- !u!1 &995697083
 GameObject:
   m_ObjectHideFlags: 0
@@ -2229,28 +2263,63 @@ MonoBehaviour:
       Data: 0|System.Collections.Generic.List`1[[EventBase, Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 7
-      Data: 1|EventWait, Assembly-CSharp
-    - Name: waitUnit
+      Data: 1|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Detective
+    - Name: message
+      Entry: 1
+      Data: We need go deeper!!
+    - Name: dialogType
       Entry: 3
       Data: 0
-    - Name: amount
-      Entry: 4
+    - Name: dialogPosition
+      Entry: 3
       Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: true
+    - Name: EndOfDialog
+      Entry: 5
+      Data: false
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 2|EventDialog, Assembly-CSharp
+      Data: 2|EventWait, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: waitUnit
+      Entry: 3
+      Data: 0
+    - Name: amount
+      Entry: 4
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
     - Name: characterName
       Entry: 1
-      Data: 
+      Data: Assistant
     - Name: message
       Entry: 1
-      Data: 
+      Data: 'Yeah!
+
+        Nothing is better'
     - Name: dialogType
       Entry: 3
       Data: 0
@@ -2262,7 +2331,7 @@ MonoBehaviour:
       Data: false
     - Name: EndOfDialog
       Entry: 5
-      Data: false
+      Data: true
     - Name: 
       Entry: 8
       Data: 
@@ -2678,7 +2747,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2038526609}
         m_MethodName: TryContinueDialog
         m_Mode: 1
         m_Arguments:
@@ -3067,6 +3136,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1962594077}
+--- !u!114 &2038526609 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114391603388986980, guid: 0d217cbc5f90e944e851c716d7828488,
+    type: 2}
+  m_PrefabInternal: {fileID: 245333787}
+  m_Script: {fileID: 11500000, guid: 522e2f0c89f5b1a45a903898ad370339, type: 3}
 --- !u!114 &2103423908
 MonoBehaviour:
   m_ObjectHideFlags: 0
