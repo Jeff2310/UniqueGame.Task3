@@ -4,14 +4,16 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class ClickToMove : MonoBehaviour {
-	NavMeshAgent _agent;
-	private SpriteRenderer _sprite;
+	private NavMeshAgent _agent;
+	private PlayerAnimation _animation;
+	
 	private SceneNode _targetNode;
 	private bool _isMoving;
+	
         
 	void Start() {
 		_agent = GetComponent<NavMeshAgent>();
-		_sprite = GameObject.FindGameObjectWithTag("PlayerSprite").GetComponent<SpriteRenderer>();
+		_animation = GetComponent<PlayerAnimation>();
 		_isMoving = false;
 	}
         
@@ -21,14 +23,9 @@ public class ClickToMove : MonoBehaviour {
 		if (_isMoving && _agent.remainingDistance < 0.0005f) 
 		{
 			_isMoving = false;
-			if (_targetNode == null) return;
-			_sprite.flipX = _targetNode.NodePosition.position.x > gameObject.transform.position.x;
-		}
-		// handle sprite flipping
-		
-		if (_isMoving)
-		{
-			_sprite.flipX = _agent.velocity.x > 0;
+			_animation.CharacterIdle();
+			if (_targetNode != null)
+				_animation.FlipX = _targetNode.NodePosition.position.x > gameObject.transform.position.x;
 		}
 		
 		// handle input
@@ -51,7 +48,9 @@ public class ClickToMove : MonoBehaviour {
 					_targetNode = null;
 					MoveToMouse(hit.point);
 				}
-				_sprite.flipX = hit.point.x > gameObject.transform.position.x;
+
+				_animation.CharacterMove();
+				_animation.FlipX = hit.point.x > gameObject.transform.position.x;
 			}
 		}
 	}
@@ -59,7 +58,7 @@ public class ClickToMove : MonoBehaviour {
 	private void MoveToMouse(Vector3 destination)
 	{
 		Vector3 aimVector = destination - gameObject.transform.position;
-		_agent.velocity = aimVector.normalized * _agent.speed / 2;
+		_agent.velocity = aimVector.normalized * _agent.speed;
 		_agent.destination = destination;
 		_isMoving = true;
 	}

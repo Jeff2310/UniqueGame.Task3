@@ -45,7 +45,7 @@ public class Singleton<T> : SerializedMonoBehaviour where T : SerializedMonoBeha
         /*
         set
         {
-            _instance = value;
+            _instance = Value;
         }
         */
     }
