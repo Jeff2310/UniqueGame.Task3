@@ -1,37 +1,40 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Web;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Experimental.UIElements;
+using UnityEngine.Events;
 using Sirenix.OdinInspector;
+
 
 public class Choice
 {
 	public enum ChoiceType
 	{
-		Single, Continous, Expanding
+		Single, Continous, Expanding, Collapse
 	}
 
 	public ChoiceType Type = ChoiceType.Single;
 	public string Text;
 	public Choice ParentChoice;
-	public int Index;
+	public int IndexInCurrent;
+	public int IndexInParent;
+	public bool Finished = false;
+	public List<UnityEvent> OnSelectEvent = new List<UnityEvent>();
 
 	public Choice()
 	{
 		Type = ChoiceType.Single;
-		Text = ""; 
-	}
-	public Choice(string text)
-	{
-		Text = text;
+		Text = "Option"; 
 	}
 
 	public void Select(BranchConversation conversation)
 	{
-		Debug.Log(Index);
+		Debug.Log(IndexInCurrent);
+		foreach (var e in OnSelectEvent)
+		{
+			e.Invoke();
+		}
 		OnSelect(conversation);
 	}
 
@@ -68,6 +71,19 @@ public class ExpandingChoice : Choice
 	}
 }
 
+public class CollapseChoice : Choice
+{
+	public CollapseChoice() : base()
+	{
+		Type = ChoiceType.Collapse;
+	}
+	
+	protected override void OnSelect(BranchConversation conversation)
+	{
+
+	}
+}
+
 public class BranchConversation : SerializedMonoBehaviour
 {
 	public CanvasRenderer ConversationBox;
@@ -88,19 +104,29 @@ public class BranchConversation : SerializedMonoBehaviour
 		}
 		ChoiceTexts = new TextMeshProUGUI[5];
 		var root = new ExpandingChoice();
-		root.SubChoices = new Choice[ChoiceDB.Count];
+		root.SubChoices = new Choice[5];
 		ChoiceDB.Insert(0, root);
-		for (int i = 1; i <= 4; i++)
+		for (int i = 1; i < ChoiceDB.Count; i++)
+		{
+			ChoiceDB[i].IndexInParent = ChoiceDB[i].IndexInCurrent;
+		}
+		for (int i = 1; i <= 5; i++)
 		{
 			(ChoiceDB[0] as ExpandingChoice).SubChoices[i-1] = ChoiceDB[i];
 			ChoiceDB[i].ParentChoice = ChoiceDB[0];
 			CurrentChoices.Add(ChoiceDB[i]);
 		}
-		for (int i = 5; i <= 7; i++)
+		(ChoiceDB[5] as ExpandingChoice).SubChoices = new Choice[4];
+		for (int i = 6; i <= 9; i++)
 		{
-			(ChoiceDB[4] as ExpandingChoice).SubChoices[i-5] = ChoiceDB[i];
-			ChoiceDB[i].ParentChoice = ChoiceDB[4];
+			(ChoiceDB[5] as ExpandingChoice).SubChoices[i-6] = ChoiceDB[i];
+			ChoiceDB[i].ParentChoice = ChoiceDB[5];
 		}
+		(ChoiceDB[4] as ContinousChoice).NextChoice = ChoiceDB[10];
+		ChoiceDB[10].ParentChoice = ChoiceDB[4];
+		(ChoiceDB[10] as ContinousChoice).NextChoice = ChoiceDB[11];
+		ChoiceDB[11].ParentChoice = ChoiceDB[10];
+		
 
 		for (int i = 0; i < 5; i++)
 		{
@@ -142,7 +168,7 @@ public class BranchConversation : SerializedMonoBehaviour
 		CurrentChoices.Clear();
 		for (int i = 0; i < choice.SubChoices.Length; i++)
 		{
-			UpdateChoice(i, choice.SubChoices[i]);
+			CurrentChoices.Add(choice.SubChoices[i]);
 		}
 		_changed = true;
 	}
@@ -151,49 +177,54 @@ public class BranchConversation : SerializedMonoBehaviour
 	{
 		Choice choice = CurrentChoices[index];
 		CurrentChoices.Clear();
+		_changed = true;
 		if (!(choice.ParentChoice.ParentChoice is ExpandingChoice))
 		{
-			Debug.Log("Wrong Model: No GrandParent!");
-			throw new Exception();
+			// 到根节点了
+			return;
+			// throw new Exception();
 		}
 		// 返回到父节点，并恢复之前各项选择
 		// 也就是获取父节点的姊妹
 		ExpandingChoice grandParentChoice = (ExpandingChoice)choice.ParentChoice.ParentChoice;
 		for (int i = 0; i < grandParentChoice.SubChoices.Length; i++)
 		{
-			UpdateChoice(i, grandParentChoice.SubChoices[i]);
+			if (grandParentChoice.SubChoices[i].Finished) continue;
+			CurrentChoices.Add(grandParentChoice.SubChoices[i]);
+			//UpdateChoice(i, grandParentChoice.SubChoices[i]);
 		}
-		FinishChoice(index);
-		_changed = true;
+		FinishChoice(choice.ParentChoice.IndexInCurrent);
+		
 	}
 
 	public void ContinueChoice(int index)
 	{
 		ContinousChoice choice = (ContinousChoice)CurrentChoices[index];
-		choice.NextChoice.Index = choice.Index;
+		choice.NextChoice.IndexInCurrent = choice.IndexInCurrent;
 		if (choice.ParentChoice is ExpandingChoice)
 		{
 			// 在选择树上删去这个节点
 			choice.NextChoice.ParentChoice = choice.ParentChoice;
-			(choice.ParentChoice as ExpandingChoice).SubChoices[choice.Index] = choice.NextChoice;
+			(choice.ParentChoice as ExpandingChoice).SubChoices[choice.IndexInParent] = choice.NextChoice;
 		}
-		UpdateChoice(choice.Index, choice.NextChoice);
+		UpdateChoice(choice.IndexInCurrent, choice.NextChoice);
 		_changed = true;
 	}
 
 	public void FinishChoice(int index)
 	{
+		CurrentChoices[index].Finished = true;
 		CurrentChoices.RemoveAt(index);
 		for (int i =  index; i < CurrentChoices.Count; i++)
 		{
-			CurrentChoices[i].Index--;
+			CurrentChoices[i].IndexInCurrent--;
 			if (CurrentChoices[i].Type == Choice.ChoiceType.Continous)
 			{
 				Choice next = CurrentChoices[i];
 				do
 				{
 					next = (next as ContinousChoice).NextChoice;
-					next.Index = CurrentChoices[i].Index;
+					next.IndexInCurrent = CurrentChoices[i].IndexInCurrent;
 				}while (next.Type == Choice.ChoiceType.Continous);
 			}
 		}
@@ -203,17 +234,22 @@ public class BranchConversation : SerializedMonoBehaviour
 	public void SelectChoice(int index)
 	{
 		CurrentChoices[index].Select(this);
-		if (CurrentChoices[index] is ContinousChoice)
+		switch (CurrentChoices[index].Type)
 		{
-			ContinueChoice(index);
-		}
-		else if (CurrentChoices[index] is ExpandingChoice)
-		{
-			ExpandChoice(index);
-		}
-		else
-		{
-			FinishChoice(index);
+			case Choice.ChoiceType.Continous:
+				ContinueChoice(index);
+				break;
+			case Choice.ChoiceType.Expanding:
+				ExpandChoice(index);
+				break;
+			case Choice.ChoiceType.Collapse:
+				CollapseChoice(index);
+				break;
+			case Choice.ChoiceType.Single:
+				FinishChoice(index);
+				break;
+			default:
+					break;
 		}
 	}
 }

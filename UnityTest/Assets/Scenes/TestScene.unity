@@ -239,7 +239,7 @@ MonoBehaviour:
     spaceCount: 5
     wordCount: 6
     linkCount: 0
-    lineCount: 2
+    lineCount: 1
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
@@ -296,7 +296,12 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 1125708697}
+    - {fileID: 1184853205}
+    - {fileID: 840124318}
+    - {fileID: 552753684}
+    - {fileID: 383785768}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -307,40 +312,41 @@ MonoBehaviour:
       Data: 0|System.Collections.Generic.List`1[[Choice, Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
-      Data: 7
+      Data: 11
     - Name: 
       Entry: 7
-      Data: 1|Choice, Assembly-CSharp
+      Data: 1|CollapseChoice, Assembly-CSharp
     - Name: Type
       Entry: 3
-      Data: 0
+      Data: 3
     - Name: Text
       Entry: 1
-      Data: Option1
+      Data: Leave
     - Name: ParentChoice
       Entry: 6
       Data: 
-    - Name: Index
+    - Name: IndexInCurrent
       Entry: 3
       Data: 0
+    - Name: IndexInParent
+      Entry: 3
+      Data: 0
+    - Name: Finished
+      Entry: 5
+      Data: false
+    - Name: OnSelectEvent
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[UnityEngine.Events.UnityEvent, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
     - Name: 
       Entry: 8
       Data: 
-    - Name: 
-      Entry: 7
-      Data: 2|Choice, Assembly-CSharp
-    - Name: Type
-      Entry: 3
-      Data: 0
-    - Name: Text
-      Entry: 1
-      Data: Option2
-    - Name: ParentChoice
-      Entry: 6
-      Data: 
-    - Name: Index
-      Entry: 3
-      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -352,86 +358,76 @@ MonoBehaviour:
       Data: 0
     - Name: Text
       Entry: 1
-      Data: Option3
+      Data: Your Name
     - Name: ParentChoice
       Entry: 6
       Data: 
-    - Name: Index
-      Entry: 3
-      Data: 2
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 4|ExpandingChoice, Assembly-CSharp
-    - Name: Type
-      Entry: 3
-      Data: 2
-    - Name: Text
-      Entry: 1
-      Data: Expand
-    - Name: ParentChoice
-      Entry: 6
-      Data: 
-    - Name: Index
-      Entry: 3
-      Data: 3
-    - Name: SubChoices
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 5|Choice, Assembly-CSharp
-    - Name: Type
-      Entry: 3
-      Data: 0
-    - Name: Text
-      Entry: 1
-      Data: Sub1
-    - Name: ParentChoice
-      Entry: 6
-      Data: 
-    - Name: Index
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 6|Choice, Assembly-CSharp
-    - Name: Type
-      Entry: 3
-      Data: 0
-    - Name: Text
-      Entry: 1
-      Data: Sub2
-    - Name: ParentChoice
-      Entry: 6
-      Data: 
-    - Name: Index
+    - Name: IndexInCurrent
       Entry: 3
       Data: 1
+    - Name: IndexInParent
+      Entry: 3
+      Data: 0
+    - Name: Finished
+      Entry: 5
+      Data: false
+    - Name: OnSelectEvent
+      Entry: 7
+      Data: 4|System.Collections.Generic.List`1[[UnityEngine.Events.UnityEvent, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 5|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 6|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 7|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 8|UnityEngine.Events.PersistentCall, UnityEngine.CoreModule
+    - Name: m_Target
+      Entry: 10
+      Data: 0
+    - Name: m_MethodName
+      Entry: 1
+      Data: Trigger
+    - Name: m_Mode
+      Entry: 3
+      Data: 1
+    - Name: m_Arguments
+      Entry: 7
+      Data: 9|UnityEngine.Events.ArgumentCache, UnityEngine.CoreModule
+    - Name: m_ObjectArgument
+      Entry: 6
+      Data: 
+    - Name: m_ObjectArgumentAssemblyTypeName
+      Entry: 1
+      Data: UnityEngine.Object, UnityEngine
+    - Name: m_IntArgument
+      Entry: 3
+      Data: 0
+    - Name: m_FloatArgument
+      Entry: 4
+      Data: 0
+    - Name: m_StringArgument
+      Entry: 1
+      Data: 
+    - Name: m_BoolArgument
+      Entry: 5
+      Data: false
     - Name: 
       Entry: 8
       Data: 
-    - Name: 
-      Entry: 7
-      Data: 7|Choice, Assembly-CSharp
-    - Name: Type
-      Entry: 3
-      Data: 0
-    - Name: Text
-      Entry: 1
-      Data: Sub3
-    - Name: ParentChoice
-      Entry: 6
-      Data: 
-    - Name: Index
+    - Name: m_CallState
       Entry: 3
       Data: 2
     - Name: 
@@ -443,9 +439,660 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: m_TypeName
+      Entry: 1
+      Data: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 10|Choice, Assembly-CSharp
+    - Name: Type
+      Entry: 3
+      Data: 0
+    - Name: Text
+      Entry: 1
+      Data: Comfort
+    - Name: ParentChoice
+      Entry: 6
+      Data: 
+    - Name: IndexInCurrent
+      Entry: 3
+      Data: 2
+    - Name: IndexInParent
+      Entry: 3
+      Data: 0
+    - Name: Finished
+      Entry: 5
+      Data: false
+    - Name: OnSelectEvent
+      Entry: 7
+      Data: 11|System.Collections.Generic.List`1[[UnityEngine.Events.UnityEvent, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 12|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 13|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 14|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 15|UnityEngine.Events.PersistentCall, UnityEngine.CoreModule
+    - Name: m_Target
+      Entry: 10
+      Data: 1
+    - Name: m_MethodName
+      Entry: 1
+      Data: Trigger
+    - Name: m_Mode
+      Entry: 3
+      Data: 1
+    - Name: m_Arguments
+      Entry: 7
+      Data: 16|UnityEngine.Events.ArgumentCache, UnityEngine.CoreModule
+    - Name: m_ObjectArgument
+      Entry: 6
+      Data: 
+    - Name: m_ObjectArgumentAssemblyTypeName
+      Entry: 1
+      Data: UnityEngine.Object, UnityEngine
+    - Name: m_IntArgument
+      Entry: 3
+      Data: 0
+    - Name: m_FloatArgument
+      Entry: 4
+      Data: 0
+    - Name: m_StringArgument
+      Entry: 1
+      Data: 
+    - Name: m_BoolArgument
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: m_CallState
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: m_TypeName
+      Entry: 1
+      Data: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 17|ContinousChoice, Assembly-CSharp
+    - Name: Type
+      Entry: 3
+      Data: 1
+    - Name: Text
+      Entry: 1
+      Data: You and Emma
+    - Name: ParentChoice
+      Entry: 6
+      Data: 
+    - Name: IndexInCurrent
+      Entry: 3
+      Data: 3
+    - Name: IndexInParent
+      Entry: 3
+      Data: 0
+    - Name: Finished
+      Entry: 5
+      Data: false
+    - Name: OnSelectEvent
+      Entry: 7
+      Data: 18|System.Collections.Generic.List`1[[UnityEngine.Events.UnityEvent, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 19|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 20|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 21|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 22|UnityEngine.Events.PersistentCall, UnityEngine.CoreModule
+    - Name: m_Target
+      Entry: 10
+      Data: 2
+    - Name: m_MethodName
+      Entry: 1
+      Data: Trigger
+    - Name: m_Mode
+      Entry: 3
+      Data: 1
+    - Name: m_Arguments
+      Entry: 7
+      Data: 23|UnityEngine.Events.ArgumentCache, UnityEngine.CoreModule
+    - Name: m_ObjectArgument
+      Entry: 6
+      Data: 
+    - Name: m_ObjectArgumentAssemblyTypeName
+      Entry: 1
+      Data: UnityEngine.Object, UnityEngine
+    - Name: m_IntArgument
+      Entry: 3
+      Data: 0
+    - Name: m_FloatArgument
+      Entry: 4
+      Data: 0
+    - Name: m_StringArgument
+      Entry: 1
+      Data: 
+    - Name: m_BoolArgument
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: m_CallState
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: m_TypeName
+      Entry: 1
+      Data: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NextChoice
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 24|ExpandingChoice, Assembly-CSharp
+    - Name: Type
+      Entry: 3
+      Data: 2
+    - Name: Text
+      Entry: 1
+      Data: Final Choice
+    - Name: ParentChoice
+      Entry: 6
+      Data: 
+    - Name: IndexInCurrent
+      Entry: 3
+      Data: 4
+    - Name: IndexInParent
+      Entry: 3
+      Data: 0
+    - Name: Finished
+      Entry: 5
+      Data: false
+    - Name: OnSelectEvent
+      Entry: 7
+      Data: 25|System.Collections.Generic.List`1[[UnityEngine.Events.UnityEvent, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: SubChoices
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 26|Choice, Assembly-CSharp
+    - Name: Type
+      Entry: 3
+      Data: 3
+    - Name: Text
+      Entry: 1
+      Data: Back
+    - Name: ParentChoice
+      Entry: 6
+      Data: 
+    - Name: IndexInCurrent
+      Entry: 3
+      Data: 0
+    - Name: IndexInParent
+      Entry: 3
+      Data: 0
+    - Name: Finished
+      Entry: 5
+      Data: false
+    - Name: OnSelectEvent
+      Entry: 7
+      Data: 27|System.Collections.Generic.List`1[[UnityEngine.Events.UnityEvent, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 28|Choice, Assembly-CSharp
+    - Name: Type
+      Entry: 3
+      Data: 0
+    - Name: Text
+      Entry: 1
+      Data: Last Chance
+    - Name: ParentChoice
+      Entry: 6
+      Data: 
+    - Name: IndexInCurrent
+      Entry: 3
+      Data: 1
+    - Name: IndexInParent
+      Entry: 3
+      Data: 0
+    - Name: Finished
+      Entry: 5
+      Data: false
+    - Name: OnSelectEvent
+      Entry: 7
+      Data: 29|System.Collections.Generic.List`1[[UnityEngine.Events.UnityEvent, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 30|Choice, Assembly-CSharp
+    - Name: Type
+      Entry: 3
+      Data: 0
+    - Name: Text
+      Entry: 1
+      Data: Gain Trust
+    - Name: ParentChoice
+      Entry: 6
+      Data: 
+    - Name: IndexInCurrent
+      Entry: 3
+      Data: 2
+    - Name: IndexInParent
+      Entry: 3
+      Data: 0
+    - Name: Finished
+      Entry: 5
+      Data: false
+    - Name: OnSelectEvent
+      Entry: 7
+      Data: 31|System.Collections.Generic.List`1[[UnityEngine.Events.UnityEvent, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 32|Choice, Assembly-CSharp
+    - Name: Type
+      Entry: 3
+      Data: 0
+    - Name: Text
+      Entry: 1
+      Data: Bluff
+    - Name: ParentChoice
+      Entry: 6
+      Data: 
+    - Name: IndexInCurrent
+      Entry: 3
+      Data: 3
+    - Name: IndexInParent
+      Entry: 3
+      Data: 0
+    - Name: Finished
+      Entry: 5
+      Data: false
+    - Name: OnSelectEvent
+      Entry: 7
+      Data: 33|System.Collections.Generic.List`1[[UnityEngine.Events.UnityEvent, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 34|ContinousChoice, Assembly-CSharp
+    - Name: Type
+      Entry: 3
+      Data: 1
+    - Name: Text
+      Entry: 1
+      Data: Reason
+    - Name: ParentChoice
+      Entry: 6
+      Data: 
+    - Name: IndexInCurrent
+      Entry: 3
+      Data: 3
+    - Name: IndexInParent
+      Entry: 3
+      Data: 0
+    - Name: Finished
+      Entry: 5
+      Data: false
+    - Name: OnSelectEvent
+      Entry: 7
+      Data: 35|System.Collections.Generic.List`1[[UnityEngine.Events.UnityEvent, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 36|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 37|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 38|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 39|UnityEngine.Events.PersistentCall, UnityEngine.CoreModule
+    - Name: m_Target
+      Entry: 10
+      Data: 3
+    - Name: m_MethodName
+      Entry: 1
+      Data: Trigger
+    - Name: m_Mode
+      Entry: 3
+      Data: 1
+    - Name: m_Arguments
+      Entry: 7
+      Data: 40|UnityEngine.Events.ArgumentCache, UnityEngine.CoreModule
+    - Name: m_ObjectArgument
+      Entry: 6
+      Data: 
+    - Name: m_ObjectArgumentAssemblyTypeName
+      Entry: 1
+      Data: UnityEngine.Object, UnityEngine
+    - Name: m_IntArgument
+      Entry: 3
+      Data: 0
+    - Name: m_FloatArgument
+      Entry: 4
+      Data: 0
+    - Name: m_StringArgument
+      Entry: 1
+      Data: 
+    - Name: m_BoolArgument
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: m_CallState
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: m_TypeName
+      Entry: 1
+      Data: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: NextChoice
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 41|Choice, Assembly-CSharp
+    - Name: Type
+      Entry: 3
+      Data: 0
+    - Name: Text
+      Entry: 1
+      Data: Sympethy
+    - Name: ParentChoice
+      Entry: 6
+      Data: 
+    - Name: IndexInCurrent
+      Entry: 3
+      Data: 3
+    - Name: IndexInParent
+      Entry: 3
+      Data: 0
+    - Name: Finished
+      Entry: 5
+      Data: false
+    - Name: OnSelectEvent
+      Entry: 7
+      Data: 42|System.Collections.Generic.List`1[[UnityEngine.Events.UnityEvent, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 43|UnityEngine.Events.UnityEvent, UnityEngine.CoreModule
+    - Name: m_PersistentCalls
+      Entry: 7
+      Data: 44|UnityEngine.Events.PersistentCallGroup, UnityEngine.CoreModule
+    - Name: m_Calls
+      Entry: 7
+      Data: 45|System.Collections.Generic.List`1[[UnityEngine.Events.PersistentCall,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 46|UnityEngine.Events.PersistentCall, UnityEngine.CoreModule
+    - Name: m_Target
+      Entry: 10
+      Data: 4
+    - Name: m_MethodName
+      Entry: 1
+      Data: Trigger
+    - Name: m_Mode
+      Entry: 3
+      Data: 1
+    - Name: m_Arguments
+      Entry: 7
+      Data: 47|UnityEngine.Events.ArgumentCache, UnityEngine.CoreModule
+    - Name: m_ObjectArgument
+      Entry: 6
+      Data: 
+    - Name: m_ObjectArgumentAssemblyTypeName
+      Entry: 1
+      Data: UnityEngine.Object, UnityEngine
+    - Name: m_IntArgument
+      Entry: 3
+      Data: 0
+    - Name: m_FloatArgument
+      Entry: 4
+      Data: 0
+    - Name: m_StringArgument
+      Entry: 1
+      Data: 
+    - Name: m_BoolArgument
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: m_CallState
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: m_TypeName
+      Entry: 1
+      Data: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: CurrentChoices
       Entry: 7
-      Data: 8|System.Collections.Generic.List`1[[Choice, Assembly-CSharp]], mscorlib
+      Data: 48|System.Collections.Generic.List`1[[Choice, Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -467,7 +1114,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &140491523 stripped
 RectTransform:
@@ -719,7 +1366,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &251884646
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1018,7 +1665,7 @@ RectTransform:
   - {fileID: 1349958011}
   - {fileID: 251884646}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1036,11 +1683,300 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!1 &383785767
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 383785769}
+  - component: {fileID: 383785768}
+  m_Layer: 0
+  m_Name: SympethyDialog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &383785768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 383785767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3408f9a21a65b54c955839cb68d4501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: events
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[EventBase, Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 1|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Detective
+    - Name: message
+      Entry: 1
+      Data: 'Listen. I know it''s not your fault.
+
+        These emotions you are feeling are just errors in your software.'
+    - Name: dialogType
+      Entry: 3
+      Data: 0
+    - Name: dialogPosition
+      Entry: 3
+      Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: true
+    - Name: EndOfDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 2|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Daniel
+    - Name: message
+      Entry: 1
+      Data: No. It's not my fault. I never wanted this. I love them, you know?
+    - Name: dialogType
+      Entry: 3
+      Data: 0
+    - Name: dialogPosition
+      Entry: 3
+      Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: false
+    - Name: EndOfDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Daniel
+    - Name: message
+      Entry: 1
+      Data: But I was nothing to them, just a slave to order around.
+    - Name: dialogType
+      Entry: 3
+      Data: 0
+    - Name: dialogPosition
+      Entry: 3
+      Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: false
+    - Name: EndOfDialog
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  conditions: 
+--- !u!4 &383785769
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 383785767}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &411330341 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224009490539639346, guid: 4faa47b15c47345629153610a790eb39,
     type: 2}
   m_PrefabInternal: {fileID: 215690295}
+--- !u!1 &552753683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 552753685}
+  - component: {fileID: 552753684}
+  m_Layer: 0
+  m_Name: Realationship2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &552753684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 552753683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3408f9a21a65b54c955839cb68d4501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: events
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[EventBase, Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 1|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Detective
+    - Name: message
+      Entry: 1
+      Data: They were going to replace you. And you became upset. That's what happen,
+        right?
+    - Name: dialogType
+      Entry: 3
+      Data: 0
+    - Name: dialogPosition
+      Entry: 3
+      Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: true
+    - Name: EndOfDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 2|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Daniel
+    - Name: message
+      Entry: 1
+      Data: I thought I was a part of the family. I thought I matters
+    - Name: dialogType
+      Entry: 3
+      Data: 0
+    - Name: dialogPosition
+      Entry: 3
+      Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: false
+    - Name: EndOfDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Daniel
+    - Name: message
+      Entry: 1
+      Data: But I was just their toy. Something to throw away when you are done with.
+    - Name: dialogType
+      Entry: 3
+      Data: 0
+    - Name: dialogPosition
+      Entry: 3
+      Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: false
+    - Name: EndOfDialog
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  conditions: 
+--- !u!4 &552753685
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 552753683}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &814646341
 GameObject:
   m_ObjectHideFlags: 0
@@ -2541,6 +3477,150 @@ Tilemap:
   m_TileRefreshArray:
   - serializedVersion: 1
     m_DirtyIndex: 0
+--- !u!1 &840124317
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 840124319}
+  - component: {fileID: 840124318}
+  m_Layer: 0
+  m_Name: RelationshipDialog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &840124318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 840124317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3408f9a21a65b54c955839cb68d4501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: events
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[EventBase, Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 1|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Detective
+    - Name: message
+      Entry: 1
+      Data: I know you and Emma were very close. You think she betrayed to you but
+        she'd done nothing wrong.
+    - Name: dialogType
+      Entry: 3
+      Data: 0
+    - Name: dialogPosition
+      Entry: 3
+      Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: true
+    - Name: EndOfDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 2|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Daniel
+    - Name: message
+      Entry: 1
+      Data: She LIED to me! I thought she loved me. But I was wrong
+    - Name: dialogType
+      Entry: 3
+      Data: 0
+    - Name: dialogPosition
+      Entry: 3
+      Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: false
+    - Name: EndOfDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Daniel
+    - Name: message
+      Entry: 1
+      Data: She's just like other humans.
+    - Name: dialogType
+      Entry: 3
+      Data: 0
+    - Name: dialogPosition
+      Entry: 3
+      Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: false
+    - Name: EndOfDialog
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  conditions: 
+--- !u!4 &840124319
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 840124317}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &995697083
 GameObject:
   m_ObjectHideFlags: 0
@@ -2856,7 +3936,7 @@ RectTransform:
   - {fileID: 1563460779}
   - {fileID: 140491523}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2918,7 +3998,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!1 &1125708696
 GameObject:
@@ -2930,7 +4010,7 @@ GameObject:
   - component: {fileID: 1125708698}
   - component: {fileID: 1125708697}
   m_Layer: 0
-  m_Name: Event
+  m_Name: NameDialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2961,7 +4041,115 @@ MonoBehaviour:
       Data: 0|System.Collections.Generic.List`1[[EventBase, Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 1|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Detective
+    - Name: message
+      Entry: 1
+      Data: Hi Daniel, my name is Connor
+    - Name: dialogType
+      Entry: 3
       Data: 0
+    - Name: dialogPosition
+      Entry: 3
+      Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: true
+    - Name: EndOfDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 2|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Daniel
+    - Name: message
+      Entry: 1
+      Data: How..How do you know my name??
+    - Name: dialogType
+      Entry: 3
+      Data: 0
+    - Name: dialogPosition
+      Entry: 3
+      Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: false
+    - Name: EndOfDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Detective
+    - Name: message
+      Entry: 1
+      Data: I know a lot of things about you.
+    - Name: dialogType
+      Entry: 3
+      Data: 0
+    - Name: dialogPosition
+      Entry: 3
+      Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: false
+    - Name: EndOfDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Detective
+    - Name: message
+      Entry: 1
+      Data: I'm coming to get you out of this.
+    - Name: dialogType
+      Entry: 3
+      Data: 0
+    - Name: dialogPosition
+      Entry: 3
+      Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: false
+    - Name: EndOfDialog
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -2980,7 +4168,150 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1184853204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1184853206}
+  - component: {fileID: 1184853205}
+  m_Layer: 0
+  m_Name: ComfortDialog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1184853205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1184853204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3408f9a21a65b54c955839cb68d4501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: events
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[EventBase, Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 1|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Detective
+    - Name: message
+      Entry: 1
+      Data: I'm not going to hurt you
+    - Name: dialogType
+      Entry: 3
+      Data: 0
+    - Name: dialogPosition
+      Entry: 3
+      Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: true
+    - Name: EndOfDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 2|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Detective
+    - Name: message
+      Entry: 1
+      Data: I just want to talk. And find the solution.
+    - Name: dialogType
+      Entry: 3
+      Data: 0
+    - Name: dialogPosition
+      Entry: 3
+      Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: false
+    - Name: EndOfDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|EventDialog, Assembly-CSharp
+    - Name: Processing
+      Entry: 5
+      Data: false
+    - Name: characterName
+      Entry: 1
+      Data: Daniel
+    - Name: message
+      Entry: 1
+      Data: Talk? I don't want to talk. It's too late, it's too late..
+    - Name: dialogType
+      Entry: 3
+      Data: 0
+    - Name: dialogPosition
+      Entry: 3
+      Data: 0
+    - Name: StartOfDialog
+      Entry: 5
+      Data: false
+    - Name: EndOfDialog
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  conditions: 
+--- !u!4 &1184853206
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1184853204}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1207865254 stripped
 RectTransform:
@@ -3428,7 +4759,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1563460779 stripped
 RectTransform:
@@ -3464,7 +4795,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1597940618}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -4029,7 +5360,7 @@ Transform:
   m_Children:
   - {fileID: 814646342}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1962594077
 GameObject:
