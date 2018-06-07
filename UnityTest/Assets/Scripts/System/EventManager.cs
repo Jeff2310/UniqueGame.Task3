@@ -8,16 +8,23 @@ using Sirenix.OdinInspector;
 public class EventManager : Singleton<EventManager> {
 
     [ReadOnly]
-    public List<Intepreter> currentInepreters = new List<Intepreter>();
+    public List<Interpreter> Interpreter = new List<Interpreter>();
+
+    public Interpreter CurrentInterpreter;
 
     public void TryContinueDialog()
     {
-        foreach (var i in currentInepreters)
+//        foreach (var i in Interpreter)
+//        {
+//            if (i.currentEvent is EventDialog)
+//            {
+//                i.DialogContinue();
+//            }
+//        }
+        if (CurrentInterpreter == null) return;
+        if (CurrentInterpreter.currentEvent is EventDialog)
         {
-            if (i.currentEvent is EventDialog)
-            {
-                i.DialogContinue();
-            }
+            CurrentInterpreter.DialogContinue();
         }
     }
 }

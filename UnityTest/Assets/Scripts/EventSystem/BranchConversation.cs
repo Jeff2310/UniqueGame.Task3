@@ -20,7 +20,8 @@ public class Choice
 	public int IndexInCurrent;
 	public int IndexInParent;
 	public bool Finished = false;
-	public List<UnityEvent> OnSelectEvent = new List<UnityEvent>();
+	public Interpreter Detail;
+	public UnityEvent[] OnSelect;
 
 	public Choice()
 	{
@@ -31,14 +32,19 @@ public class Choice
 	public void Select(BranchConversation conversation)
 	{
 		Debug.Log(IndexInCurrent);
-		foreach (var e in OnSelectEvent)
+		if (Detail != null)
+		{
+			Detail.Trigger();
+		}
+
+		foreach (var e in OnSelect)
 		{
 			e.Invoke();
 		}
-		OnSelect(conversation);
+		OnSelectBase(conversation);
 	}
 
-	protected virtual void OnSelect(BranchConversation conversation)
+	protected virtual void OnSelectBase(BranchConversation conversation)
 	{
 		
 	}
@@ -51,10 +57,6 @@ public class ContinousChoice : Choice
 	{
 		Type = ChoiceType.Continous;
 	}
-
-	protected override void OnSelect(BranchConversation conversation)
-	{
-	}
 }
 
 public class ExpandingChoice : Choice
@@ -64,11 +66,6 @@ public class ExpandingChoice : Choice
 	{
 		Type = ChoiceType.Expanding;
 	}
-	
-	protected override void OnSelect(BranchConversation conversation)
-	{
-
-	}
 }
 
 public class CollapseChoice : Choice
@@ -76,11 +73,6 @@ public class CollapseChoice : Choice
 	public CollapseChoice() : base()
 	{
 		Type = ChoiceType.Collapse;
-	}
-	
-	protected override void OnSelect(BranchConversation conversation)
-	{
-
 	}
 }
 
@@ -93,7 +85,10 @@ public class BranchConversation : SerializedMonoBehaviour
 	public List<Choice> ChoiceDB = new List<Choice>();
 	public List<Choice> CurrentChoices = new List<Choice>();
 
+	public bool Enabled;
+	public bool Finish;
 	private bool _changed = true;
+	private Interpreter _currentInterpreter;
 	
 	// Use this for initialization
 	void Start ()
@@ -102,7 +97,13 @@ public class BranchConversation : SerializedMonoBehaviour
 		{
 			_ConversationBoxRect = ConversationBox.gameObject.GetComponent<RectTransform>();
 		}
-		ChoiceTexts = new TextMeshProUGUI[5];
+		if(ChoiceTexts==null)
+			ChoiceTexts= new TextMeshProUGUI[5];
+		for (int i = 0; i < 5; i++)
+		{
+			ChoiceTexts[i] = GameObject.Find("ChoiceText" + i.ToString()).GetComponent<TextMeshProUGUI>();
+			ChoiceTexts[i].gameObject.SetActive(false);
+		}
 		var root = new ExpandingChoice();
 		root.SubChoices = new Choice[5];
 		ChoiceDB.Insert(0, root);
@@ -114,7 +115,6 @@ public class BranchConversation : SerializedMonoBehaviour
 		{
 			(ChoiceDB[0] as ExpandingChoice).SubChoices[i-1] = ChoiceDB[i];
 			ChoiceDB[i].ParentChoice = ChoiceDB[0];
-			CurrentChoices.Add(ChoiceDB[i]);
 		}
 		(ChoiceDB[5] as ExpandingChoice).SubChoices = new Choice[4];
 		for (int i = 6; i <= 9; i++)
@@ -126,18 +126,20 @@ public class BranchConversation : SerializedMonoBehaviour
 		ChoiceDB[10].ParentChoice = ChoiceDB[4];
 		(ChoiceDB[10] as ContinousChoice).NextChoice = ChoiceDB[11];
 		ChoiceDB[11].ParentChoice = ChoiceDB[10];
-		
-
-		for (int i = 0; i < 5; i++)
+		for (int i = 1; i <= 5; i++)
 		{
-			ChoiceTexts[i] = GameObject.Find("ChoiceText" + i.ToString()).GetComponent<TextMeshProUGUI>();
-			ChoiceTexts[i].gameObject.SetActive(false);
+			//if (ChoiceDB[i].Finished) continue;
+			CurrentChoices.Add(ChoiceDB[i]);
 		}
+
+		Finish = false;
+		Disable();
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
+		if (!Enabled) return;
 		float lineHeight = 20.0f;
 		if (!_changed) return;
 		Vector2 newSize = _ConversationBoxRect.rect.size;
@@ -181,6 +183,8 @@ public class BranchConversation : SerializedMonoBehaviour
 		if (!(choice.ParentChoice.ParentChoice is ExpandingChoice))
 		{
 			// 到根节点了
+			Disable();
+			Finish = true;
 			return;
 			// throw new Exception();
 		}
@@ -234,6 +238,13 @@ public class BranchConversation : SerializedMonoBehaviour
 	public void SelectChoice(int index)
 	{
 		CurrentChoices[index].Select(this);
+		_currentInterpreter = CurrentChoices[index].Detail;
+		var temp = EventManager.Instance.CurrentInterpreter;
+		if (_currentInterpreter != null)
+		{
+			EventManager.Instance.CurrentInterpreter = _currentInterpreter;
+		}
+
 		switch (CurrentChoices[index].Type)
 		{
 			case Choice.ChoiceType.Continous:
@@ -249,7 +260,36 @@ public class BranchConversation : SerializedMonoBehaviour
 				FinishChoice(index);
 				break;
 			default:
-					break;
+				break;
 		}
+		Disable();
+		StartCoroutine(DetectChioceDetailEnd());
+	}
+
+	public void Enable()
+	{
+		Enabled = true;
+	}
+
+	public void Disable()
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			ChoiceTexts[i].gameObject.SetActive(false);
+		}
+		Enabled = false;
+	}
+
+	private IEnumerator DetectChioceDetailEnd()
+	{
+		while (_currentInterpreter != null && _currentInterpreter.Running)
+		{
+			yield return null;
+		}
+		Enable();
+		UIManager.Instance.dialogMessage.gameObject.SetActive(false);
+		UIManager.Instance.continueButton.gameObject.SetActive(false);
+		UIManager.Instance.nameBox.gameObject.SetActive(false);
+		_currentInterpreter = null;
 	}
 }

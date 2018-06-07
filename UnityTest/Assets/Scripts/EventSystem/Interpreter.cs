@@ -10,7 +10,7 @@ using Sirenix.Utilities.Editor;
 
 #endif
 
-public class Intepreter : SerializedMonoBehaviour {
+public class Interpreter : SerializedMonoBehaviour {
 
     [Title(title: "Conditions")]
     public List<bool> conditions = new List<bool>();
@@ -20,6 +20,7 @@ public class Intepreter : SerializedMonoBehaviour {
     public List<EventBase> events = new List<EventBase>();
 
     public EventBase currentEvent { get; private set; }
+    public bool Running;
 
     //Editor modifications
 #if UNITY_EDITOR
@@ -34,13 +35,29 @@ public class Intepreter : SerializedMonoBehaviour {
 #endif
     //--------------------
 
+    public void Awake()
+    {
+        EventManager.Instance.Interpreter.Add(this);
+        Running = false;
+    }
+
     public void Trigger()
     {
-        StopCoroutine(ExcuteEvents());
-        EventManager.Instance.currentInepreters.Add(this);
+        if (Running)
+        {
+            ForceStop();
+        }
+        EventManager.Instance.CurrentInterpreter = this;
         StartCoroutine(ExcuteEvents());
-        
+        Running = true;
     }
+
+    public void ForceStop()
+    {
+        StopAllCoroutines();
+        EventManager.Instance.CurrentInterpreter = null;
+    }
+    
     private IEnumerator ExcuteEvents()
     {
         foreach (var e in events)
@@ -56,9 +73,13 @@ public class Intepreter : SerializedMonoBehaviour {
             {
                 DialogEvent();
             }
-            if (e is EventWait)
+            else if (e is EventWait)
             {
                 WaitEvent();
+            }
+            else if (e is EventSelect)
+            {
+                SelectEvent();
             }
 
 
@@ -71,16 +92,9 @@ public class Intepreter : SerializedMonoBehaviour {
             currentEvent = null;
         }
 
-        EventManager.Instance.currentInepreters.Remove(this);
+        Running = false;
+        EventManager.Instance.CurrentInterpreter = null;
     }
-
-
-
-
-
-
-
-
 
     #region All the functionalities to implement
     //Dialog Event Implemention
@@ -88,13 +102,15 @@ public class Intepreter : SerializedMonoBehaviour {
     {
         EventDialog eDialog = currentEvent as EventDialog;
         eDialog.Processing = true;
+        DialogShowMessage();
+        DialogShowName();
         StopCoroutine("DialogTyping");
         StartCoroutine(DialogTyping());
     }
     private IEnumerator DialogTyping()
     {
         EventDialog eDialog = currentEvent as EventDialog;
-        DialogHideContinue();
+        DialogHideContinueButton();
         DialogStartAnim();
         UIManager.Instance.nameText.text = eDialog.characterName;
         UIManager.Instance.dialogMessage.text = "";
@@ -105,7 +121,7 @@ public class Intepreter : SerializedMonoBehaviour {
             yield return null;
         }
 
-        DialogShowContinue();
+        DialogShowContinueButton();
     }
     private void DialogStartAnim()
     {
@@ -121,11 +137,11 @@ public class Intepreter : SerializedMonoBehaviour {
             UIManager.Instance.dialogBox.gameObject.GetComponent<Animator>().SetBool("Dialogging", false);
         }
     }
-    private void DialogHideContinue()
+    private void DialogHideContinueButton()
     {
         UIManager.Instance.continueButton.gameObject.SetActive(false);
     }
-    private void DialogShowContinue()
+    private void DialogShowContinueButton()
     {
         UIManager.Instance.continueButton.gameObject.SetActive(true);
     }
@@ -166,6 +182,48 @@ public class Intepreter : SerializedMonoBehaviour {
     }
 
     #endregion
+    
+    // Select Event Implemention
 
+    private void DialogHideMessage()
+    {
+        UIManager.Instance.dialogMessage.gameObject.SetActive(false);
+    }
+    private void DialogShowMessage()
+    {
+        UIManager.Instance.dialogMessage.gameObject.SetActive(true);
+    }
+    private void DialogHideName()
+    {
+        UIManager.Instance.nameBox.gameObject.SetActive(false);
+    }
+    private void DialogShowName()
+    {
+        UIManager.Instance.nameBox.gameObject.SetActive(true);
+    }
+    
+    private void SelectEvent()
+    {
+        EventSelect eSelect = currentEvent as EventSelect;
+        eSelect.Processing = true;
+        DialogHideMessage();
+        DialogHideContinueButton();
+        DialogHideName();
+        eSelect.SelectScript.Enable();
+        StartCoroutine(DetectSelectEnding());
+    }
+
+    private IEnumerator DetectSelectEnding()
+    {
+        EventSelect eSelect = currentEvent as EventSelect;
+        while (!eSelect.SelectScript.Finish)
+        {
+            yield return null;
+        }
+        eSelect.Processing = false;
+        eSelect.SelectScript.Disable();
+        EventManager.Instance.CurrentInterpreter = this;
+        DialogShowMessage();
+    }
 }
 

@@ -166,3 +166,9 @@ public class EventScript:EventBase
 
 
 }
+
+public class EventSelect : EventBase
+{
+    public BranchConversation SelectScript;
+    
+}

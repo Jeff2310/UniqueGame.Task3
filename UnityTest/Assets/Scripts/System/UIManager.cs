@@ -7,5 +7,6 @@ public class UIManager : Singleton<UIManager> {
     public CanvasRenderer dialogBox;
     public TextMeshProUGUI dialogMessage;
     public TextMeshProUGUI nameText;
+    public CanvasRenderer nameBox;
     public Button continueButton;
 }
