@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
 public class AudioManager : Singleton<AudioManager> {
     
+    
 
-    [System.Serializable]
 	public class SE
     {
         
@@ -19,7 +20,7 @@ public class AudioManager : Singleton<AudioManager> {
         [HideInInspector]
         public AudioSource source;
     }
-    [System.Serializable]
+
     public class BGM
     {
         
@@ -34,8 +35,8 @@ public class AudioManager : Singleton<AudioManager> {
         public AudioSource source;
     }
 
-    public List<SE> SEs;
-    public List<BGM> BGMs;
+    public List<SE> SEs = new List<SE>();
+    public List<BGM> BGMs = new List<BGM>();
     
 
     private void Start()

@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using Sirenix.Serialization;
+﻿using System;
+using UnityEngine;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 #if UNITY_EDITOR
 using Sirenix.Utilities.Editor;
@@ -156,6 +157,41 @@ public class EventCondition:EventBase
         return label;
     }
 }
+
+public class EventChoice : EventBase
+{
+    [Range(0,5)]
+    public int choiceNum = 3;
+    [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.OneLine)]
+    public Dictionary<string, List<EventBase>> choices = new Dictionary<string, List<EventBase>>();
+
+#if UNITY_EDITOR
+    
+# endif
+
+}
+
+public class EventLabel:EventBase
+{
+    public string labelName;
+
+    public override string GetLabel()
+    {
+        return "Label: " + labelName;
+    }
+}
+
+public class EventJumpToLabel:EventBase
+{
+    public string toLabelName;
+
+    public override string GetLabel()
+    {
+        return "Jump to the label:" + toLabelName;
+    }
+
+}
+
 
 public class EventScript:EventBase
 {

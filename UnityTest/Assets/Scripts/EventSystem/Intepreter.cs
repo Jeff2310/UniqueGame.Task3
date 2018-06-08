@@ -16,26 +16,56 @@ public class Intepreter : SerializedMonoBehaviour {
     public List<bool> conditions = new List<bool>();
     
     [Title(title:"Event Contents")]
+    [OnInspectorGUI("CheckEventElements")]
     [ListDrawerSettings(OnBeginListElementGUI ="BeginDrawEventList",OnEndListElementGUI = "EndDrawEventList")]
     public List<EventBase> events = new List<EventBase>();
 
     public EventBase currentEvent { get; private set; }
 
+
+    private int index = 0;
+    private Dictionary<string, int> labels = new Dictionary<string, int>();
+
     //Editor modifications
 #if UNITY_EDITOR
+    private void CheckEventElements()
+    {
+        for(int i=0;i<events.Count;)
+        {
+            if (events[i] == null)
+            {
+                events.RemoveAt(i);
+            }
+            else
+            {
+                i++;
+            }
+        }
+    }
     private void BeginDrawEventList(int index)
     {
+        if (events[index] == null)
+        {
+            return;
+        }
+        SirenixEditorGUI.HorizontalLineSeparator(2);
         SirenixEditorGUI.BeginBox(events[index].GetLabel());
     }
     private void EndDrawEventList(int index)
     {
+        if (events[index] == null)
+        {
+            return;
+        }
         SirenixEditorGUI.EndBox();
+        SirenixEditorGUI.HorizontalLineSeparator(2);
     }
 #endif
     //--------------------
 
     public void Trigger()
     {
+
         StopCoroutine(ExcuteEvents());
         EventManager.Instance.currentInepreters.Add(this);
         StartCoroutine(ExcuteEvents());
@@ -43,8 +73,9 @@ public class Intepreter : SerializedMonoBehaviour {
     }
     private IEnumerator ExcuteEvents()
     {
-        foreach (var e in events)
+        for(index = 0;index < events.Count;index++)
         {
+            var e = events[index];
             if (e == null)
             {
                 continue;
@@ -60,6 +91,14 @@ public class Intepreter : SerializedMonoBehaviour {
             {
                 WaitEvent();
             }
+            if (e is EventLabel)
+            {
+                LabelEvent();
+            }
+            if (e is EventJumpToLabel)
+            {
+                JumpToLabelEvent();
+            }
 
 
             //Won't continue until this one is finished
@@ -71,6 +110,7 @@ public class Intepreter : SerializedMonoBehaviour {
             currentEvent = null;
         }
 
+        index = 0;
         EventManager.Instance.currentInepreters.Remove(this);
     }
 
@@ -102,6 +142,21 @@ public class Intepreter : SerializedMonoBehaviour {
         foreach (var letter in eDialog.message)
         {
             UIManager.Instance.dialogMessage.text += letter;
+            switch (letter)
+            {
+                case '\n':
+                case '.':
+                    yield return new WaitForSeconds(0.1f);
+                    break;
+                case ',':
+                case ' ':
+                    yield return new WaitForSeconds(0.08f);
+                    break;
+                case '?':
+                case '!':
+                    yield return new WaitForSeconds(0.15f);
+                    break;
+            }
             yield return null;
         }
 
@@ -128,6 +183,10 @@ public class Intepreter : SerializedMonoBehaviour {
     private void DialogShowContinue()
     {
         UIManager.Instance.continueButton.gameObject.SetActive(true);
+    }
+    public void DialogSkip()
+    {
+        
     }
     public void DialogContinue()
     {
@@ -165,6 +224,48 @@ public class Intepreter : SerializedMonoBehaviour {
         eWait.Processing = false;
     }
 
+
+
+    //Label Event Implemention
+    private void LabelEvent()
+    {
+        EventLabel eLabel = currentEvent as EventLabel;
+        eLabel.Processing = true;
+        foreach (var name in labels.Keys)
+        {
+            if (name == eLabel.labelName)
+            {
+                //Debug.LogWarning("The label: " + name + " has already existed!!!");
+                eLabel.Processing = false;
+                return;
+            }
+        }
+
+        //Record the next event index
+        labels.Add(eLabel.labelName, index);
+
+        eLabel.Processing = false;
+    }
+
+
+    //Jump To Label Event Implemention
+    private void JumpToLabelEvent()
+    {
+        EventJumpToLabel eJump = currentEvent as EventJumpToLabel;
+        eJump.Processing = true;
+
+        foreach (var p in labels)
+        {
+            if (p.Key == eJump.toLabelName)
+            {
+                index = p.Value;
+                eJump.Processing = false;
+                return;
+            }
+        }
+        Debug.LogWarning("The label: " + eJump.toLabelName + " was not found!!");
+        eJump.Processing = false;
+    }
     #endregion
 
 }
