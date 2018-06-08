@@ -139,9 +139,27 @@ public class Intepreter : SerializedMonoBehaviour {
         UIManager.Instance.nameText.text = eDialog.characterName;
         UIManager.Instance.dialogMessage.text = "";
 
-        foreach (var letter in eDialog.message)
+        for (int i =0;i<eDialog.message.Length;i++)
         {
+            char letter = eDialog.message[i];
+
             UIManager.Instance.dialogMessage.text += letter;
+
+            //Fix the transmeaning pattern
+            if (letter == '<')
+            {
+                int j = 1;
+                while (eDialog.message[i+j]!='>')
+                {
+                    UIManager.Instance.dialogMessage.text += eDialog.message[i+j];
+                    j++;
+                }
+                UIManager.Instance.dialogMessage.text += eDialog.message[i + j];
+                i = i + j;
+            }
+
+            
+
             switch (letter)
             {
                 case '\n':
@@ -150,7 +168,7 @@ public class Intepreter : SerializedMonoBehaviour {
                     break;
                 case ',':
                 case ' ':
-                    yield return new WaitForSeconds(0.08f);
+                    yield return new WaitForSeconds(0.05f);
                     break;
                 case '?':
                 case '!':

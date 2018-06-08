@@ -32,10 +32,10 @@ Shader "Sprites/Refract" {
 		AlphaTest Off
 		Lighting Off
 		ColorMask RGBA
-		Blend Off
+		Blend SrcAlpha OneMinusSrcAlpha
 
 		CGPROGRAM
-//#pragma target 2.0
+//#pragma target 4.0
 #pragma fragment frag
 #pragma vertex vert
 #include "UnityCG.cginc"
@@ -89,10 +89,9 @@ Shader "Sprites/Refract" {
 
 		float2 offsetUV = (-_Refraction * (disTex * _DistortionPower - (_DistortionPower*0.5)));
 
-		fixed4 col = tex2D(_MainTex, bgScale * i.uv + bgOffset + offsetUV);
+		return tex2D(_MainTex, bgScale * i.uv + bgOffset + offsetUV);
 
-
-		return col;
+		
 	}
 
 		ENDCG

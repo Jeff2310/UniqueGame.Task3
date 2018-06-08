@@ -160,8 +160,6 @@ public class EventCondition:EventBase
 
 public class EventChoice : EventBase
 {
-    [Range(0,5)]
-    public int choiceNum = 3;
     [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.OneLine)]
     public Dictionary<string, List<EventBase>> choices = new Dictionary<string, List<EventBase>>();
 

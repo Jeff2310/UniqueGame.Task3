@@ -93,9 +93,13 @@ Shader "Sprites/Light Mask"
 	fixed4 frag(v2f i) : COLOR
 	{
 		half4 color = tex2D(_MainTex, i.uv) * i.color;
-		half4 mask = tex2D(_Mask, i.uv);
-		//color.rgb += mask.rgb;
-		color.a *= (1-mask.a);
+		half4 light = tex2D(_Mask, i.uv);
+
+		//color.rgb += light.rgb;
+		color.a *= (1-light.a);
+
+		color.rgb += light.rgb * (1-color.a);
+
 		return color;
 	}
 	
