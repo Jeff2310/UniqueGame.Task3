@@ -2,8 +2,8 @@
 {
 	Properties
 	{
-		_MainTex ("Texture", 2D) = "white" {}
-		_Mask("Texture",2D) = "white"{}
+		_Mask ("Mask", 2D) = "black" {}
+		_Lights ("Lights",2DArray) = "white"{}
 	}
 	SubShader
 	{
@@ -21,7 +21,7 @@
 
 		SetTexture[_Mask]{ combine texture }
 
-		SetTexture[_MainTex]{ combine texture,texture * previous }
+		SetTexture[_Lights]{ combine texture,texture * previous }
 
 
 		}

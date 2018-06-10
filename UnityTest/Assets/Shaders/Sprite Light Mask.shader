@@ -5,8 +5,8 @@ Shader "Sprites/Light Mask"
 	Properties
 	{
 		[PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
-		_Mask("Base (RGB)", 2D) = "white" {}
-
+		_Mask("Light", 2D) = "white" {}
+		_Light_Array("Lights",2DArray) = "black"{}
 
 		_Color("Tint", Color) = (1,1,1,1)
 		_StencilComp("Stencil Comparison", Float) = 8
@@ -76,7 +76,16 @@ Shader "Sprites/Light Mask"
 	};
 
 	sampler2D _MainTex;
+	fixed4 _MainTex_ST;
+	fixed4 _MainTex_TexelSize;
+
 	sampler2D _Mask;
+	//Include tiling and offset data
+	fixed4 _Mask_ST;
+	//Include texture size data
+	fixed4 _Mask_TexelSize;
+
+	UNITY_DECLARE_TEX2DARRAY(_Light_Array);
 
 	v2f vert(a2v i)
 	{
@@ -92,8 +101,13 @@ Shader "Sprites/Light Mask"
 
 	fixed4 frag(v2f i) : COLOR
 	{
+		//Make the scale as the real scale relative to the mask
+		_Mask_ST.xy = _Mask_TexelSize.xy / _MainTex_TexelSize.xy;
+
 		half4 color = tex2D(_MainTex, i.uv) * i.color;
-		half4 light = tex2D(_Mask, i.uv);
+
+
+		half4 light = tex2D(_Mask, i.uv*_Mask_ST-_Mask_ST.zw+0.5);
 
 		//color.rgb += light.rgb;
 		color.a *= (1-light.a);

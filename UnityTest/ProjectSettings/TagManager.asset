@@ -18,9 +18,9 @@ TagManager:
   - 
   - 
   - BlockingLayer
-  - 
-  - 
-  - 
+  - Light Obstacles
+  - Light Sources
+  - Ambient Light
   - 
   - 
   - 
@@ -53,4 +53,7 @@ TagManager:
     locked: 0
   - name: Units
     uniqueID: 3393972251
+    locked: 0
+  - name: Others
+    uniqueID: 3393319287
     locked: 0
