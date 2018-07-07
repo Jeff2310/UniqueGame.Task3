@@ -17,7 +17,7 @@ public class Intepreter : SerializedMonoBehaviour {
     
     [Title(title:"Event Contents")]
     [OnInspectorGUI("CheckEventElements")]
-    [ListDrawerSettings(OnBeginListElementGUI ="BeginDrawEventList",OnEndListElementGUI = "EndDrawEventList")]
+    [ListDrawerSettings(OnBeginListElementGUI ="BeginDrawEventList",OnEndListElementGUI = "EndDrawEventList",NumberOfItemsPerPage = 5)]
     public List<EventBase> events = new List<EventBase>();
 
     public EventBase currentEvent { get; private set; }
@@ -67,7 +67,8 @@ public class Intepreter : SerializedMonoBehaviour {
     {
 
         StopCoroutine(ExcuteEvents());
-        EventManager.Instance.currentInepreters.Add(this);
+        if (!EventManager.Instance.currentInepreters.Contains(this))
+            EventManager.Instance.currentInepreters.Add(this);
         StartCoroutine(ExcuteEvents());
         
     }
@@ -204,7 +205,9 @@ public class Intepreter : SerializedMonoBehaviour {
     }
     public void DialogSkip()
     {
-        
+        StopCoroutine(DialogTyping());
+        UIManager.Instance.dialogMessage.text = (currentEvent as EventDialog).message;
+        DialogShowContinue();
     }
     public void DialogContinue()
     {

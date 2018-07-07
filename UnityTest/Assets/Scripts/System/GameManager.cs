@@ -4,6 +4,13 @@ public class GameManager : Singleton<GameManager> {
 
 	public void ToTitle()
     {
-        SceneManager.LoadScene("Title");
+        SceneManager.LoadScene("Title Scene");
     }
+
+    public void ToGameScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+
 }

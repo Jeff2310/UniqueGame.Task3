@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using Sirenix.OdinInspector;
 [CreateAssetMenu(fileName ="New Basic Item",menuName ="Item/Basic",order =0)]
-public class ItemBase : ScriptableObject {
+public class ItemBase : SerializedScriptableObject {
+
+    public enum ItemType { Basic, Consumable }
+    [ReadOnly]
+    public ItemType type;
 
     public string itemName = "New Item";
 
@@ -13,15 +18,9 @@ public class ItemBase : ScriptableObject {
     [Range(1,999)]
     public int maxStack=1;
 
-    public enum ItemType { Basic, Consumable }
-    public ItemType type
-    {
-        get;
-        protected set;
-    }
-
-    [SerializeField]
-    [HideInInspector]
+    
+    
+    [PreviewField]
     public Sprite icon;
 
     public bool interactable = true;
@@ -33,6 +32,7 @@ public class ItemBase : ScriptableObject {
     }
 }
 
+/*
 [CustomEditor(typeof(ItemBase))]
 public class ItemBaseEditor:Editor
 {
@@ -55,4 +55,5 @@ public class ItemBaseEditor:Editor
         base.OnInspectorGUI();
         itemBase.icon = (Sprite)EditorGUILayout.ObjectField("Icon", itemBase.icon, typeof(Sprite), false, null);
     }
-}
+    
+}*/

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-[CreateAssetMenu(fileName = "New Basic Item", menuName = "Item/Comsuable", order = 1)]
+using Sirenix.OdinInspector;
+[CreateAssetMenu(fileName = "New Consumable Item", menuName = "Item/Comsuable", order = 1)]
 public class ItemConsumable : ItemBase {
 
     private void Awake()
@@ -12,10 +13,11 @@ public class ItemConsumable : ItemBase {
 
     public void Use()
     {
-        Debug.Log("Using " + itemName);
+        Debug.Log("Using " + name);
     }
 }
 
+/*
 [CustomEditor(typeof(ItemConsumable))]
 public class ItemConsuamleEditor : ItemBaseEditor
 {
@@ -32,4 +34,5 @@ public class ItemConsuamleEditor : ItemBaseEditor
         base.OnInspectorGUI();
         //itemConsumable.icon = (Sprite)EditorGUILayout.ObjectField("Icon", itemBase.icon, typeof(Sprite), false, null);
     }
-}
+    
+}*/

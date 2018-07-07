@@ -18,6 +18,10 @@ public class EventManager : Singleton<EventManager> {
             {
                 i.DialogContinue();
             }
+            else
+            {
+                Debug.Log("There is no Dialog running");
+            }
         }
     }
 }

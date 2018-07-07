@@ -13,11 +13,12 @@ public class GloomEffect : SerializedMonoBehaviour {
     public float speed = 1f;
 
     private Vector3 oriScale;
-    
+    private Color oriColor;
 
     private void Start()
     {
         oriScale = transform.localScale;
+        oriColor = lightSpr.Color;
     }
 
     // Update is called once per frame
@@ -27,7 +28,8 @@ public class GloomEffect : SerializedMonoBehaviour {
 
         if (lightSpr != null)
         {
-
+            return;
         }
+        lightSpr.Color = oriColor * k;
 	}
 }

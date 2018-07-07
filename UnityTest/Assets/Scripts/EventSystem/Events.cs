@@ -107,7 +107,8 @@ public class EventWait : EventBase
 public class EventCondition:EventBase
 {
     [Title(title:"Conditions")]
-    public List<bool> conditions = new List<bool>();
+    [HideReferenceObjectPicker]
+    public List<Condition> conditions = new List<Condition>();
 
 
     [Title(title:"Events to Excute if Conditions are True")]
@@ -162,12 +163,24 @@ public class EventChoice : EventBase
 {
     [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.OneLine)]
     public Dictionary<string, List<EventBase>> choices = new Dictionary<string, List<EventBase>>();
-
+    public enum ChoiceType { Normal,Ultra}
+    [EnumToggleButtons]
+    public ChoiceType choiceType;
+    
 #if UNITY_EDITOR
     
 # endif
 
 }
+
+public class EventInventory : EventBase
+{
+    public ItemBase item;
+    public enum ItemChangeType { Gain,Lose}
+    public ItemChangeType itemChangeType;
+    public int amount = 1;
+}
+
 
 public class EventLabel:EventBase
 {
