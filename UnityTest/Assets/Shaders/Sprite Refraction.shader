@@ -74,7 +74,7 @@ Shader "Sprites/Refract" {
 	}
 
 
-		fixed4 frag(VertexToFragment i) : SV_Target{
+	fixed4 frag(VertexToFragment i) : SV_Target{
 		fixed xScrollValue = _AnimXSpeed * _Time.y;
 		fixed yScrollValue = _AnimYSpeed * _Time.y;
 		_DistortionScrollX += xScrollValue;

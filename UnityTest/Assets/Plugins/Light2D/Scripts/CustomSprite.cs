@@ -93,7 +93,8 @@ namespace Light2D
 #if UNITY_EDITOR
             if (Material == null)
             {
-                Material = Resources.GetBuiltinResource<Material>("Sprites-Default.mat");
+                Material = AssetDatabase.GetBuiltinExtraResource<Material>("Sprites-Default.mat");
+                //AssetDatabase.GetBuiltinExtraResource<Material>("Sprites-Default.mat");
             }
 #endif
 

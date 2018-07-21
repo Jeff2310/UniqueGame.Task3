@@ -92,6 +92,10 @@ public class Intepreter : SerializedMonoBehaviour {
             {
                 WaitEvent();
             }
+            if(e is EventInventory)
+            {
+                InventoryEvent();
+            }
             if (e is EventLabel)
             {
                 LabelEvent();
@@ -245,7 +249,27 @@ public class Intepreter : SerializedMonoBehaviour {
         eWait.Processing = false;
     }
 
+    //Inventory Event Implemention
+    private void InventoryEvent()
+    {
+        
+        var e = currentEvent as EventInventory;
+        if (e == null)
+        {
+            return;
+        }
+        switch (e.itemChangeType)
+        {
+            case EventInventory.ItemChangeType.Gain:
 
+                break;
+            case EventInventory.ItemChangeType.Lose:
+
+                break;
+            default:
+                break;
+        }
+    }
 
     //Label Event Implemention
     private void LabelEvent()
