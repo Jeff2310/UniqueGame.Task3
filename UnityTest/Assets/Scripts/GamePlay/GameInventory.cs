@@ -16,7 +16,7 @@ public class GameInventory : MonoBehaviour {
     }
 
     public int capacity;
-    public List<Item> items;
+    public List<Item> items = new List<Item>();
 
     public Item GainItem(ItemBase itemBase,int amount = 1)
     {

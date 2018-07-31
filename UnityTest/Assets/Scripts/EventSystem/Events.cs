@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using Sirenix.Serialization;
+﻿using System;
+using UnityEngine;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 #if UNITY_EDITOR
 using Sirenix.Utilities.Editor;
@@ -106,7 +107,8 @@ public class EventWait : EventBase
 public class EventCondition:EventBase
 {
     [Title(title:"Conditions")]
-    public List<bool> conditions = new List<bool>();
+    [HideReferenceObjectPicker]
+    public List<Condition> conditions = new List<Condition>();
 
 
     [Title(title:"Events to Excute if Conditions are True")]
@@ -156,6 +158,51 @@ public class EventCondition:EventBase
         return label;
     }
 }
+
+public class EventChoice : EventBase
+{
+    [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.OneLine)]
+    public Dictionary<string, List<EventBase>> choices = new Dictionary<string, List<EventBase>>();
+    public enum ChoiceType { Normal,Ultra}
+    [EnumToggleButtons]
+    public ChoiceType choiceType;
+    
+#if UNITY_EDITOR
+    
+# endif
+
+}
+
+public class EventInventory : EventBase
+{
+    public ItemBase item;
+    public enum ItemChangeType { Gain,Lose}
+    public ItemChangeType itemChangeType;
+    public int amount = 1;
+}
+
+
+public class EventLabel:EventBase
+{
+    public string labelName;
+
+    public override string GetLabel()
+    {
+        return "Label: " + labelName;
+    }
+}
+
+public class EventJumpToLabel:EventBase
+{
+    public string toLabelName;
+
+    public override string GetLabel()
+    {
+        return "Jump to the label:" + toLabelName;
+    }
+
+}
+
 
 public class EventScript:EventBase
 {

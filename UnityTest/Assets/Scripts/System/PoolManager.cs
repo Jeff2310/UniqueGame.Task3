@@ -4,7 +4,6 @@ using UnityEngine;
 public class PoolManager : Singleton<PoolManager> {
 
     //Mark it serializable So we can edit the array in the Hierarchy
-    [System.Serializable]
     public class Pool
     {
         public string name;
@@ -12,14 +11,13 @@ public class PoolManager : Singleton<PoolManager> {
         public int size;
     }
 
-    public List<Pool> pools;
-    public Dictionary<string,Queue<GameObject>> poolDic;
+    public List<Pool> pools = new List<Pool>();
+    public Dictionary<string,Queue<GameObject>> poolDic = new Dictionary<string, Queue<GameObject>>();
 
 
 
 	// Use this for initialization
 	void Start () {
-        poolDic = new Dictionary<string, Queue<GameObject>>();
 
         foreach (Pool pool in pools)
         {
