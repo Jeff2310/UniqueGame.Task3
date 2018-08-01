@@ -77,7 +77,7 @@ public class Interpreter : SerializedMonoBehaviour {
             {
                 WaitEvent();
             }
-            else if (e is EventSelect)
+            else if (e is EventChoice)
             {
                 SelectEvent();
             }
@@ -204,24 +204,24 @@ public class Interpreter : SerializedMonoBehaviour {
     
     private void SelectEvent()
     {
-        EventSelect eSelect = currentEvent as EventSelect;
+        EventChoice eSelect = currentEvent as EventChoice;
         eSelect.Processing = true;
         DialogHideMessage();
         DialogHideContinueButton();
         DialogHideName();
-        eSelect.SelectScript.Enable();
+        eSelect.ConversationScript.Enable();
         StartCoroutine(DetectSelectEnding());
     }
 
     private IEnumerator DetectSelectEnding()
     {
-        EventSelect eSelect = currentEvent as EventSelect;
-        while (!eSelect.SelectScript.Finish)
+        EventChoice eSelect = currentEvent as EventChoice;
+        while (!eSelect.ConversationScript.Finish)
         {
             yield return null;
         }
         eSelect.Processing = false;
-        eSelect.SelectScript.Disable();
+        eSelect.ConversationScript.Disable();
         EventManager.Instance.CurrentInterpreter = this;
         DialogShowMessage();
     }

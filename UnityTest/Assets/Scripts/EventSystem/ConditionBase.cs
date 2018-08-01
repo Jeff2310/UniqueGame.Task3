@@ -1,19 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Sirenix.OdinInspector;
+﻿using UnityEngine;
 
-public class Condition {
+public class ConditionBase {
     public string name;
 
-	public bool Check()
+    public virtual bool Check()
     {
         switch (name)
         {
             case "Check switch 1":
                 return GameSwitches.Instance.GetSwitch(1);
 
-            
+
 
 
 
@@ -24,5 +21,4 @@ public class Condition {
                 return false;
         }
     }
-    
 }

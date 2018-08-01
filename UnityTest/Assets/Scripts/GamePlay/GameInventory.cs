@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameInventory : MonoBehaviour {
+public class GameInventory : Singleton<GameInventory> {
     public class Item
     {
         public ItemBase itemBase;
@@ -69,5 +69,9 @@ public class GameInventory : MonoBehaviour {
         Debug.LogWarning("The Item to lose was not found!!");
         return null;
     }
-
+    
+    public Item FindItem(ItemBase item)
+    {
+        return items.Find((Item i) => i.itemBase==item);
+    }
 }

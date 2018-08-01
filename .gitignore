@@ -34,3 +34,8 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+/Assets/.idea/.idea.ClickToMove
+/UnityPackageManager
+/ProjectSettings
+/Assets
+/Assembly-CSharp.csproj.DotSettings

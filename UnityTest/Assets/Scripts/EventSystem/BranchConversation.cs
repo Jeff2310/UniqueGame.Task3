@@ -6,76 +6,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
-
-public class Choice
-{
-	public enum ChoiceType
-	{
-		Single, Continous, Expanding, Collapse
-	}
-
-	public ChoiceType Type = ChoiceType.Single;
-	public string Text;
-	public Choice ParentChoice;
-	public int IndexInCurrent;
-	public int IndexInParent;
-	public bool Finished = false;
-	public Interpreter Detail;
-	public UnityEvent[] OnSelect;
-
-	public Choice()
-	{
-		Type = ChoiceType.Single;
-		Text = "Option"; 
-	}
-
-	public void Select(BranchConversation conversation)
-	{
-		Debug.Log(IndexInCurrent);
-		if (Detail != null)
-		{
-			Detail.Trigger();
-		}
-
-		foreach (var e in OnSelect)
-		{
-			e.Invoke();
-		}
-		OnSelectBase(conversation);
-	}
-
-	protected virtual void OnSelectBase(BranchConversation conversation)
-	{
-		
-	}
-}
-
-public class ContinousChoice : Choice
-{
-	public Choice NextChoice;
-	public ContinousChoice() : base()
-	{
-		Type = ChoiceType.Continous;
-	}
-}
-
-public class ExpandingChoice : Choice
-{
-	public Choice[] SubChoices;
-	public ExpandingChoice() : base()
-	{
-		Type = ChoiceType.Expanding;
-	}
-}
-
-public class CollapseChoice : Choice
-{
-	public CollapseChoice() : base()
-	{
-		Type = ChoiceType.Collapse;
-	}
-}
-
 public class BranchConversation : SerializedMonoBehaviour
 {
 	public CanvasRenderer ConversationBox;
@@ -95,8 +25,9 @@ public class BranchConversation : SerializedMonoBehaviour
 	{
 		if (ConversationBox != null)
 		{
-			_ConversationBoxRect = ConversationBox.gameObject.GetComponent<RectTransform>();
-		}
+            //_ConversationBoxRect = UIManager.Instance.dialogBox.gameObject.GetComponent<RectTransform>();
+            _ConversationBoxRect = ConversationBox.gameObject.GetComponent<RectTransform>();
+        }
 		if(ChoiceTexts==null)
 			ChoiceTexts= new TextMeshProUGUI[5];
 		for (int i = 0; i < 5; i++)

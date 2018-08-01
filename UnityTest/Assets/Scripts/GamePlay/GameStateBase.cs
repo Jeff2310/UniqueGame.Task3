@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+using StateValue = System.Int32;
+
 public abstract class GameStateBase : MonoBehaviour
 {
     public string StateName;
