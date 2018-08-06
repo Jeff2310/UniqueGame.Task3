@@ -112,12 +112,12 @@ public class EventCondition:EventBase
 
 
     [Title(title:"Events to Excute if Conditions are True")]
-    [ListDrawerSettings(OnBeginListElementGUI ="BeginDrawIfList",OnEndListElementGUI = "EndDrawEventList")]
+    [ListDrawerSettings(OnBeginListElementGUI ="BeginDrawIfList",OnEndListElementGUI = "EndDrawEventList",ShowIndexLabels = true)]
     public List<EventBase> ifContent = new List<EventBase>();
 
 
     [Title(title:"Events to Excute if Conditions are False")]
-    [ListDrawerSettings(OnBeginListElementGUI ="BeginDrawElseList",OnEndListElementGUI = "EndDrawEventList")]
+    [ListDrawerSettings(OnBeginListElementGUI ="BeginDrawElseList",OnEndListElementGUI = "EndDrawEventList", ShowIndexLabels = true)]
     public List<EventBase> elseContent = new List<EventBase>();
     
     [Title(title:"",subtitle:"Whether this will loop when the conditions are still True")]
@@ -129,14 +129,73 @@ public class EventCondition:EventBase
 #if UNITY_EDITOR
     private void BeginDrawIfList(int index)
     {
+        var e = ifContent[index];
+        if (e == null)
+        {
+            return;
+        }
+        else if (e is EventDialog)
+        {
+            GUIHelper.PushColor(new Color(0.2f, 0.75f, 0.9f));
+        }
+        else if (e is EventWait)
+        {
+            GUIHelper.PushColor(new Color(0.7f, 0.8f, 0.5f));
+        }
+        else if (e is EventInventory)
+        {
+            GUIHelper.PushColor(new Color(0.8f, 0.6f, 0.4f));
+        }
+        else if (e is EventLabel || e is EventJumpToLabel)
+        {
+            GUIHelper.PushColor(new Color(0.4f, 0.5f, 0.7f));
+        }
+        else if (e is EventSwitch || e is EventVariable)
+        {
+            GUIHelper.PushColor(new Color(0.8f, 0.4f, 0.4f));
+        }
+        else
+        {
+            GUIHelper.PushColor(Color.gray);
+        }
         SirenixEditorGUI.BeginBox(ifContent[index].GetLabel());
     }
     private void BeginDrawElseList(int index)
     {
+        var e = elseContent[index];
+        if (e == null)
+        {
+            return;
+        }
+        else if (e is EventDialog)
+        {
+            GUIHelper.PushColor(new Color(0.2f, 0.75f, 0.9f));
+        }
+        else if (e is EventWait)
+        {
+            GUIHelper.PushColor(new Color(0.7f, 0.8f, 0.5f));
+        }
+        else if (e is EventInventory)
+        {
+            GUIHelper.PushColor(new Color(0.8f, 0.6f, 0.4f));
+        }
+        else if (e is EventLabel || e is EventJumpToLabel)
+        {
+            GUIHelper.PushColor(new Color(0.4f, 0.5f, 0.7f));
+        }
+        else if (e is EventCondition)
+        {
+            GUIHelper.PushColor(new Color(0.8f, 0.4f, 0.4f));
+        }
+        else
+        {
+            GUIHelper.PushColor(Color.gray);
+        }
         SirenixEditorGUI.BeginBox(elseContent[index].GetLabel());
     }
     private void EndDrawEventList(int index)
     {
+        GUIHelper.PopColor();
         SirenixEditorGUI.EndBox();
     }
 #endif
@@ -179,8 +238,45 @@ public class EventInventory : EventBase
     public enum ItemChangeType { Gain,Lose}
     public ItemChangeType itemChangeType;
     public int amount = 1;
+
+    public override string GetLabel()
+    {
+        string text = "Inventory - ";
+        text += itemChangeType.ToString();
+        text += " ";
+        text += amount;
+        text += " ";
+        if (item == null)
+        {
+            text += "None";
+        }
+        else
+        {
+            text += item.itemName;
+        }
+        
+        return text;
+        
+    }
 }
 
+public class EventSwitch : EventBase {
+
+    public int switchIndex = 0;
+    public enum SwitchOperation { SetToFalse, SetToTrue }
+    [EnumToggleButtons]
+    public SwitchOperation operation;
+
+}
+
+public class EventVariable : EventBase
+{
+    public int varIndex = 0;
+    public enum VarOperation { EqualsTo,Plus,Minus,Multiply}
+    [EnumToggleButtons]
+    public VarOperation operation;
+    public float number;
+}
 
 public class EventLabel:EventBase
 {
@@ -204,12 +300,10 @@ public class EventJumpToLabel:EventBase
 }
 
 
-public class EventScript:EventBase
+public class EventCustom:EventBase
 {
-    [MultiLineProperty]
-    public string namespaces;
-    [MultiLineProperty(6)]
-    public string code;
-
+    
+    public delegate void CustomFunc();
+    public CustomFunc func;
 
 }

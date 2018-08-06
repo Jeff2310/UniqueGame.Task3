@@ -55,7 +55,7 @@ public class ImageDissolve : SerializedMonoBehaviour {
     {
         for (int i = 0; i <= duration; i++)
         {
-            factor = 0.55f / duration * i + 0.25f;
+            factor = 0.6f / duration * i + 0.25f;
             yield return null;
         }
         dissolving = false;

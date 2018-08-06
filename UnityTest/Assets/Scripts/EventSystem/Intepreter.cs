@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
@@ -12,12 +13,12 @@ using Sirenix.Utilities.Editor;
 
 public class Intepreter : SerializedMonoBehaviour {
 
-    [Title(title: "Conditions")]
-    public List<bool> conditions = new List<bool>();
+    [Title(title: "The Name of the Intepreter",subtitle:"Name the intepreter so it can be recognized easily.")]
+    public string intepreterName = "New Intepreter";
     
     [Title(title:"Event Contents")]
     [OnInspectorGUI("CheckEventElements")]
-    [ListDrawerSettings(OnBeginListElementGUI ="BeginDrawEventList",OnEndListElementGUI = "EndDrawEventList",NumberOfItemsPerPage = 5)]
+    [ListDrawerSettings(OnBeginListElementGUI ="BeginDrawEventList",OnEndListElementGUI = "EndDrawEventList",ShowIndexLabels = true)]
     public List<EventBase> events = new List<EventBase>();
 
     public EventBase currentEvent { get; private set; }
@@ -44,11 +45,35 @@ public class Intepreter : SerializedMonoBehaviour {
     }
     private void BeginDrawEventList(int index)
     {
-        if (events[index] == null)
+        var e = events[index];
+        if (e == null)
         {
             return;
         }
-        SirenixEditorGUI.HorizontalLineSeparator(2);
+        else if(e is EventDialog)
+        {
+            GUIHelper.PushColor(new Color(0.2f, 0.75f, 0.9f));
+        }
+        else if (e is EventWait)
+        {
+            GUIHelper.PushColor(new Color(0.7f, 0.8f, 0.5f));
+        }
+        else if (e is EventInventory)
+        {
+            GUIHelper.PushColor(new Color(0.8f, 0.6f, 0.4f));
+        }
+        else if (e is EventLabel || e is EventJumpToLabel)
+        {
+            GUIHelper.PushColor(new Color(0.4f, 0.5f, 0.7f));
+        }
+        else if (e is EventSwitch || e is EventVariable)
+        {
+            GUIHelper.PushColor(new Color(0.8f, 0.4f, 0.4f));
+        }
+        else
+        {
+            GUIHelper.PushColor(Color.gray);
+        }
         SirenixEditorGUI.BeginBox(events[index].GetLabel());
     }
     private void EndDrawEventList(int index)
@@ -57,8 +82,8 @@ public class Intepreter : SerializedMonoBehaviour {
         {
             return;
         }
+        GUIHelper.PopColor();
         SirenixEditorGUI.EndBox();
-        SirenixEditorGUI.HorizontalLineSeparator(2);
     }
 #endif
     //--------------------
@@ -95,6 +120,14 @@ public class Intepreter : SerializedMonoBehaviour {
             if(e is EventInventory)
             {
                 InventoryEvent();
+            }
+            if(e is EventSwitch)
+            {
+                SwitchEvent();
+            }
+            if (e is EventVariable)
+            {
+                VarEvent();
             }
             if (e is EventLabel)
             {
@@ -141,14 +174,14 @@ public class Intepreter : SerializedMonoBehaviour {
         EventDialog eDialog = currentEvent as EventDialog;
         DialogHideContinue();
         DialogStartAnim();
-        UIManager.Instance.nameText.text = eDialog.characterName;
-        UIManager.Instance.dialogMessage.text = "";
+        DialogUIRef.Instance.nameText.text = eDialog.characterName;
+        DialogUIRef.Instance.dialogMessage.text = "";
 
         for (int i =0;i<eDialog.message.Length;i++)
         {
             char letter = eDialog.message[i];
 
-            UIManager.Instance.dialogMessage.text += letter;
+            DialogUIRef.Instance.dialogMessage.text += letter;
 
             //Fix the transmeaning pattern
             if (letter == '<')
@@ -156,10 +189,10 @@ public class Intepreter : SerializedMonoBehaviour {
                 int j = 1;
                 while (eDialog.message[i+j]!='>')
                 {
-                    UIManager.Instance.dialogMessage.text += eDialog.message[i+j];
+                    DialogUIRef.Instance.dialogMessage.text += eDialog.message[i+j];
                     j++;
                 }
-                UIManager.Instance.dialogMessage.text += eDialog.message[i + j];
+                DialogUIRef.Instance.dialogMessage.text += eDialog.message[i + j];
                 i = i + j;
             }
 
@@ -189,28 +222,28 @@ public class Intepreter : SerializedMonoBehaviour {
     {
         if ((currentEvent as EventDialog).StartOfDialog)
         {
-            UIManager.Instance.dialogBox.gameObject.GetComponent<Animator>().SetBool("Dialogging",true);
+            DialogUIRef.Instance.dialogBox.gameObject.GetComponent<Animator>().SetBool("Dialogging",true);
         }
     }
     private void DialogEndAnim()
     {
         if ((currentEvent as EventDialog).EndOfDialog)
         {
-            UIManager.Instance.dialogBox.gameObject.GetComponent<Animator>().SetBool("Dialogging", false);
+            DialogUIRef.Instance.dialogBox.gameObject.GetComponent<Animator>().SetBool("Dialogging", false);
         }
     }
     private void DialogHideContinue()
     {
-        UIManager.Instance.continueButton.gameObject.SetActive(false);
+        DialogUIRef.Instance.continueButton.gameObject.SetActive(false);
     }
     private void DialogShowContinue()
     {
-        UIManager.Instance.continueButton.gameObject.SetActive(true);
+        DialogUIRef.Instance.continueButton.gameObject.SetActive(true);
     }
     public void DialogSkip()
     {
         StopCoroutine(DialogTyping());
-        UIManager.Instance.dialogMessage.text = (currentEvent as EventDialog).message;
+        DialogUIRef.Instance.dialogMessage.text = (currentEvent as EventDialog).message;
         DialogShowContinue();
     }
     public void DialogContinue()
@@ -249,6 +282,9 @@ public class Intepreter : SerializedMonoBehaviour {
         eWait.Processing = false;
     }
 
+
+
+
     //Inventory Event Implemention
     private void InventoryEvent()
     {
@@ -270,6 +306,65 @@ public class Intepreter : SerializedMonoBehaviour {
                 break;
         }
     }
+
+
+
+
+    //Switch Event Implemention
+    private void SwitchEvent()
+    {
+        EventSwitch eSwitch = currentEvent as EventSwitch;
+        eSwitch.Processing = true;
+        switch (eSwitch.operation)
+        {
+            case EventSwitch.SwitchOperation.SetToFalse:
+                GameSwitches.Instance.SetSwitch(eSwitch.switchIndex, false);
+                break;
+            case EventSwitch.SwitchOperation.SetToTrue:
+                GameSwitches.Instance.SetSwitch(eSwitch.switchIndex, true);
+                break;
+            default:
+                break;
+        }
+        eSwitch.Processing = false;
+    }
+
+
+    //Var Event Implemention
+    private void VarEvent()
+    {
+        EventVariable eVar = currentEvent as EventVariable;
+        eVar.Processing = true;
+        float v;
+
+        switch (eVar.operation)
+        {
+            case EventVariable.VarOperation.EqualsTo:
+                GameVariables.Instance.SetVar(eVar.varIndex, eVar.number);
+                break;
+            case EventVariable.VarOperation.Plus:
+                v = GameVariables.Instance.GetVar(eVar.varIndex);
+                v += eVar.number;
+                GameVariables.Instance.SetVar(eVar.varIndex, v);
+                break;
+            case EventVariable.VarOperation.Minus:
+                v = GameVariables.Instance.GetVar(eVar.varIndex);
+                v -= eVar.number;
+                GameVariables.Instance.SetVar(eVar.varIndex, v);
+                break;
+            case EventVariable.VarOperation.Multiply:
+                v = GameVariables.Instance.GetVar(eVar.varIndex);
+                v *= eVar.number;
+                GameVariables.Instance.SetVar(eVar.varIndex, v);
+                break;
+            default:
+                break;
+        }
+        eVar.Processing = false;
+    }
+
+
+
 
     //Label Event Implemention
     private void LabelEvent()
@@ -293,6 +388,8 @@ public class Intepreter : SerializedMonoBehaviour {
     }
 
 
+
+
     //Jump To Label Event Implemention
     private void JumpToLabelEvent()
     {
@@ -313,5 +410,19 @@ public class Intepreter : SerializedMonoBehaviour {
     }
     #endregion
 
+
+    //Custom Script Event Implemention
+    private void CustomEvent()
+    {
+        EventCustom eCustom = currentEvent as EventCustom;
+        AsyncCallback callback = new AsyncCallback(CustomAsyncResult);
+        //parameters
+        object o = new object();
+        eCustom.func.BeginInvoke(callback,o);
+    }
+    private void CustomAsyncResult(IAsyncResult ar)
+    {
+        Debug.Log("Delegate Activated");
+    }
 }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-public class UIManager : Singleton<UIManager> {
+public class DialogUIRef : Singleton<DialogUIRef> {
 
     public CanvasRenderer dialogBox;
     public TextMeshProUGUI dialogMessage;

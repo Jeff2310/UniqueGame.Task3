@@ -12,7 +12,8 @@ public class Condition {
         {
             case "Check switch 1":
                 return GameSwitches.Instance.GetSwitch(1);
-
+            
+            
             
 
 
