@@ -6,9 +6,9 @@ using Sirenix.OdinInspector;
 using Sirenix.Utilities.Editor;
 #endif
 [RequireComponent(typeof(Intepreter))]
-public class Character : SerializedMonoBehaviour
+public class EventTrigger : SerializedMonoBehaviour
 {
-   
+
     public class EventPage
     {
         [OnInspectorGUI("DrawIntepreterName")]
@@ -34,7 +34,7 @@ public class Character : SerializedMonoBehaviour
         }
 #endif
     }
-    
+
 
     //Index of active intepreter
     public int pageIndex = 0;
@@ -42,7 +42,7 @@ public class Character : SerializedMonoBehaviour
     [ListDrawerSettings(ShowIndexLabels = true)]
     public List<EventPage> pages = new List<EventPage>();
 
-
+    //Active intepreter
     public EventPage page
     {
         get
@@ -54,13 +54,18 @@ public class Character : SerializedMonoBehaviour
     private void Update()
     {
         //Auto Trigger
-        if (page == null)
-        {
-            Debug.LogWarning("Can not find the page of " + pageIndex + "!");
-            return;
-        }
         if (page.triggerType == EventPage.TriggerType.Auto)
         {
+            if (page == null)
+            {
+                Debug.LogWarning("Can not find the page of " + pageIndex + "!");
+                return;
+            }
+            //Won't execute if the auto execute is executing
+            if (EventManager.Instance.currentInepreters.Contains(page.intepreter))
+            {
+                return;
+            }
             ExectuePage();
         }
 
@@ -69,28 +74,7 @@ public class Character : SerializedMonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Collide
-        var o = collision.gameObject;
-        if (o.tag == "Player")
-        {
-            if (page == null)
-            {
-                Debug.LogWarning("Can not find the page of " + pageIndex + "!");
-                return;
-            }
-            if (Input.GetButtonDown("Submit"))
-            {
-                if (page.triggerType == EventPage.TriggerType.Auto)
-                {
-                    ExectuePage();
-                }
-            }
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        //Press Confirm
-        if (Input.GetButtonDown("Submit"))
+        if (page.triggerType == EventPage.TriggerType.Collide)
         {
             var o = collision.gameObject;
             if (o.tag == "Player")
@@ -100,9 +84,30 @@ public class Character : SerializedMonoBehaviour
                     Debug.LogWarning("Can not find the page of " + pageIndex + "!");
                     return;
                 }
-
-                if (page.triggerType == EventPage.TriggerType.Auto)
+                if (Input.GetButtonDown("Submit"))
                 {
+
+                    ExectuePage();
+                }
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        //Press Confirm
+        if (page.triggerType == EventPage.TriggerType.PressConfirm)
+        {
+            if (Input.GetButtonDown("Submit"))
+            {
+                var o = collision.gameObject;
+                if (o.tag == "Player")
+                {
+                    if (page == null)
+                    {
+                        Debug.LogWarning("Can not find the page of " + pageIndex + "!");
+                        return;
+                    }
                     ExectuePage();
                 }
             }
