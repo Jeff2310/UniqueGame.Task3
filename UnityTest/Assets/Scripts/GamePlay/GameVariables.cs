@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class GameVariables : Singleton<GameVariables>
 {
 	public const int capacity = 100;
-	private float[] variables = new float[capacity];
+	public float[] variables = new float[capacity];
 
 	public void SetVar(int index,float value)
 	{

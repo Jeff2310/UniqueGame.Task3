@@ -13,7 +13,7 @@ public class EventBase
     public bool Processing = false;
 
     [InfoBox("This is an EMPTY BASE EVENT,you shouldn't have created this,try to set it to other child Events.", InfoMessageType.Info)]
-    
+
     public virtual string GetLabel()
     {
         return GetType().Name;
@@ -28,7 +28,7 @@ public class EventDialog : EventBase
 
 
     [TabGroup("Content")]
-    [HideIf("dialogType",DialogType.Monologue)]
+    [HideIf("dialogType", DialogType.Monologue)]
     public string characterName = "";
     [TabGroup("Content")]
     [MultiLineProperty(lines: 4)]
@@ -88,10 +88,10 @@ public class EventDialog : EventBase
 
 public class EventWait : EventBase
 {
-    public enum WaitUnit { Seconds,Frames}
+    public enum WaitUnit { Seconds, Frames }
     [EnumToggleButtons]
     public WaitUnit waitUnit;
-    [PropertyRange(0,999)]
+    [PropertyRange(0, 999)]
     public float amount;
 
     public override string GetLabel()
@@ -104,23 +104,23 @@ public class EventWait : EventBase
     }
 }
 
-public class EventCondition:EventBase
+public class EventCondition : EventBase
 {
-    [Title(title:"Conditions")]
+    [Title(title: "Conditions")]
     [HideReferenceObjectPicker]
     public List<Condition> conditions = new List<Condition>();
 
 
-    [Title(title:"Events to Excute if Conditions are True")]
-    [ListDrawerSettings(OnBeginListElementGUI ="BeginDrawIfList",OnEndListElementGUI = "EndDrawEventList",ShowIndexLabels = true)]
+    [Title(title: "Events to Excute if Conditions are True")]
+    [ListDrawerSettings(OnBeginListElementGUI = "BeginDrawIfList", OnEndListElementGUI = "EndDrawEventList", ShowIndexLabels = true)]
     public List<EventBase> ifContent = new List<EventBase>();
 
 
-    [Title(title:"Events to Excute if Conditions are False")]
-    [ListDrawerSettings(OnBeginListElementGUI ="BeginDrawElseList",OnEndListElementGUI = "EndDrawEventList", ShowIndexLabels = true)]
+    [Title(title: "Events to Excute if Conditions are False")]
+    [ListDrawerSettings(OnBeginListElementGUI = "BeginDrawElseList", OnEndListElementGUI = "EndDrawEventList", ShowIndexLabels = true)]
     public List<EventBase> elseContent = new List<EventBase>();
-    
-    [Title(title:"",subtitle:"Whether this will loop when the conditions are still True")]
+
+    [Title(title: "", subtitle: "Whether this will loop when the conditions are still True")]
     public bool loop = false;
 
 
@@ -153,6 +153,10 @@ public class EventCondition:EventBase
         else if (e is EventSwitch || e is EventVariable)
         {
             GUIHelper.PushColor(new Color(0.8f, 0.4f, 0.4f));
+        }
+        else if (e is EventAudio)
+        {
+            GUIHelper.PushColor(new Color(0.7f, 0.7f, 0.2f));
         }
         else
         {
@@ -222,20 +226,20 @@ public class EventChoice : EventBase
 {
     [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.OneLine)]
     public Dictionary<string, List<EventBase>> choices = new Dictionary<string, List<EventBase>>();
-    public enum ChoiceType { Normal,Ultra}
+    public enum ChoiceType { Normal, Ultra }
     [EnumToggleButtons]
     public ChoiceType choiceType;
-    
+
 #if UNITY_EDITOR
-    
-# endif
+
+#endif
 
 }
 
 public class EventInventory : EventBase
 {
     public ItemBase item;
-    public enum ItemChangeType { Gain,Lose}
+    public enum ItemChangeType { Gain, Lose }
     public ItemChangeType itemChangeType;
     public int amount = 1;
 
@@ -254,31 +258,137 @@ public class EventInventory : EventBase
         {
             text += item.itemName;
         }
-        
+
         return text;
-        
+
     }
 }
 
-public class EventSwitch : EventBase {
+public class EventSwitch : EventBase
+{
 
     public int switchIndex = 0;
     public enum SwitchOperation { SetToFalse, SetToTrue }
     [EnumToggleButtons]
     public SwitchOperation operation;
 
+    public override string GetLabel()
+    {
+        string lable = "Switch - ";
+        lable += "No." + switchIndex + " ";
+        lable += operation.ToString();
+
+        return lable;
+
+    }
+
+
+
 }
 
 public class EventVariable : EventBase
 {
     public int varIndex = 0;
-    public enum VarOperation { EqualsTo,Plus,Minus,Multiply}
+    public enum VarOperation { EqualsTo, Plus, Minus, Multiply }
     [EnumToggleButtons]
     public VarOperation operation;
     public float number;
+
+    public override string GetLabel()
+    {
+        string lable = "Switch - ";
+        lable += "No." + varIndex + " ";
+        lable += operation.ToString() + " ";
+        lable += number;
+
+        return lable;
+
+    }
 }
 
-public class EventLabel:EventBase
+public class EventAudio : EventBase
+{
+    public enum AudioType { BGM, SE }
+    [EnumToggleButtons]
+    public AudioType audioType;
+
+    public string audioName;
+
+    public enum BGMOperationType { Play, Stop, FadeIn, FadeOut }
+    [EnumToggleButtons]
+    [HideIf("IsSE")]
+    public BGMOperationType bgmOperationType;
+
+    [HideIf("IsNotFadeOperation")]
+    public int duration = 60;
+
+    private bool IsSE()
+    {
+        if (audioType == AudioType.SE)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    private bool IsNotFadeOperation()
+    {
+        //BGM operation and Fade operation
+        if (audioType == AudioType.BGM && (bgmOperationType == BGMOperationType.FadeIn || bgmOperationType == BGMOperationType.FadeOut))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+
+    public override string GetLabel()
+    {
+        string lable = "";
+
+        switch (audioType)
+        {
+            case AudioType.BGM:
+                lable += "BGM - ";
+                switch (bgmOperationType)
+                {
+                    case BGMOperationType.Play:
+
+                        lable += "Play " + audioName;
+                        break;
+                    case BGMOperationType.Stop:
+                        lable += "Stop " + audioName;
+                        break;
+                    case BGMOperationType.FadeIn:
+                        lable += "Fade In " + audioName + " for " + duration + " frames";
+                        break;
+                    case BGMOperationType.FadeOut:
+                        lable += "Fade Out " + audioName + " for " + duration + " frames";
+                        break;
+                    default:
+                        Debug.LogWarning("AudioManager ERROR!!");
+                        break;
+                }
+                break;
+            case AudioType.SE:
+                lable += "SE - Play " + audioName;
+                break;
+            default:
+                Debug.LogWarning("AudioManager ERROR!!");
+                break;
+        }
+
+        return lable;
+    }
+
+}
+
+public class EventLabel : EventBase
 {
     public string labelName;
 
@@ -288,7 +398,7 @@ public class EventLabel:EventBase
     }
 }
 
-public class EventJumpToLabel:EventBase
+public class EventJumpToLabel : EventBase
 {
     public string toLabelName;
 
@@ -300,10 +410,23 @@ public class EventJumpToLabel:EventBase
 }
 
 
-public class EventCustom:EventBase
+public class EventCustom : EventBase
 {
-    
+
     public delegate void CustomFunc();
     public CustomFunc func;
 
+    public override string GetLabel()
+    {
+        string lable = "Custom - ";
+        if (func == null)
+        {
+            lable += "NONE";
+        }
+        else
+        {
+            lable += "Function " + func.ToString() + " of " + func.Target.ToString();
+        }
+        return lable;
+    }
 }

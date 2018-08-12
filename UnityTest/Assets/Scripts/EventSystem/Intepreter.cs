@@ -11,14 +11,15 @@ using Sirenix.Utilities.Editor;
 
 #endif
 
-public class Intepreter : SerializedMonoBehaviour {
+public class Intepreter : SerializedMonoBehaviour
+{
 
-    [Title(title: "The Name of the Intepreter",subtitle:"Name the intepreter so it can be recognized easily.")]
+    [Title(title: "The Name of the Intepreter", subtitle: "Name the intepreter so it can be recognized easily.")]
     public string intepreterName = "New Intepreter";
-    
-    [Title(title:"Event Contents")]
+
+    [Title(title: "Event Contents")]
     [OnInspectorGUI("CheckEventElements")]
-    [ListDrawerSettings(OnBeginListElementGUI ="BeginDrawEventList",OnEndListElementGUI = "EndDrawEventList",ShowIndexLabels = true)]
+    [ListDrawerSettings(OnBeginListElementGUI = "BeginDrawEventList", OnEndListElementGUI = "EndDrawEventList", ShowIndexLabels = true)]
     public List<EventBase> events = new List<EventBase>();
 
     public EventBase currentEvent { get; private set; }
@@ -31,7 +32,7 @@ public class Intepreter : SerializedMonoBehaviour {
 #if UNITY_EDITOR
     private void CheckEventElements()
     {
-        for(int i=0;i<events.Count;)
+        for (int i = 0; i < events.Count;)
         {
             if (events[i] == null)
             {
@@ -50,7 +51,7 @@ public class Intepreter : SerializedMonoBehaviour {
         {
             return;
         }
-        else if(e is EventDialog)
+        else if (e is EventDialog)
         {
             GUIHelper.PushColor(new Color(0.2f, 0.75f, 0.9f));
         }
@@ -69,6 +70,10 @@ public class Intepreter : SerializedMonoBehaviour {
         else if (e is EventSwitch || e is EventVariable)
         {
             GUIHelper.PushColor(new Color(0.8f, 0.4f, 0.4f));
+        }
+        else if (e is EventAudio)
+        {
+            GUIHelper.PushColor(new Color(0.7f, 0.7f, 0.2f));
         }
         else
         {
@@ -95,11 +100,11 @@ public class Intepreter : SerializedMonoBehaviour {
         if (!EventManager.Instance.currentInepreters.Contains(this))
             EventManager.Instance.currentInepreters.Add(this);
         StartCoroutine(ExcuteEvents());
-        
+
     }
     private IEnumerator ExcuteEvents()
     {
-        for(index = 0;index < events.Count;index++)
+        for (index = 0; index < events.Count; index++)
         {
             var e = events[index];
             if (e == null)
@@ -117,17 +122,21 @@ public class Intepreter : SerializedMonoBehaviour {
             {
                 WaitEvent();
             }
-            if(e is EventInventory)
+            if (e is EventInventory)
             {
                 InventoryEvent();
             }
-            if(e is EventSwitch)
+            if (e is EventSwitch)
             {
                 SwitchEvent();
             }
             if (e is EventVariable)
             {
                 VarEvent();
+            }
+            if (e is EventAudio)
+            {
+                AudioEvent();
             }
             if (e is EventLabel)
             {
@@ -177,7 +186,7 @@ public class Intepreter : SerializedMonoBehaviour {
         DialogUIRef.Instance.nameText.text = eDialog.characterName;
         DialogUIRef.Instance.dialogMessage.text = "";
 
-        for (int i =0;i<eDialog.message.Length;i++)
+        for (int i = 0; i < eDialog.message.Length; i++)
         {
             char letter = eDialog.message[i];
 
@@ -187,16 +196,16 @@ public class Intepreter : SerializedMonoBehaviour {
             if (letter == '<')
             {
                 int j = 1;
-                while (eDialog.message[i+j]!='>')
+                while (eDialog.message[i + j] != '>')
                 {
-                    DialogUIRef.Instance.dialogMessage.text += eDialog.message[i+j];
+                    DialogUIRef.Instance.dialogMessage.text += eDialog.message[i + j];
                     j++;
                 }
                 DialogUIRef.Instance.dialogMessage.text += eDialog.message[i + j];
                 i = i + j;
             }
 
-            
+
 
             switch (letter)
             {
@@ -222,7 +231,7 @@ public class Intepreter : SerializedMonoBehaviour {
     {
         if ((currentEvent as EventDialog).StartOfDialog)
         {
-            DialogUIRef.Instance.dialogBox.gameObject.GetComponent<Animator>().SetBool("Dialogging",true);
+            DialogUIRef.Instance.dialogBox.gameObject.GetComponent<Animator>().SetBool("Dialogging", true);
         }
     }
     private void DialogEndAnim()
@@ -288,7 +297,7 @@ public class Intepreter : SerializedMonoBehaviour {
     //Inventory Event Implemention
     private void InventoryEvent()
     {
-        
+
         var e = currentEvent as EventInventory;
         if (e == null)
         {
@@ -365,6 +374,51 @@ public class Intepreter : SerializedMonoBehaviour {
 
 
 
+    //Audio Event Implemention
+    private void AudioEvent()
+    {
+        currentEvent.Processing = true;
+
+
+        EventAudio eAudio = currentEvent as EventAudio;
+        var audioType = eAudio.audioType;
+        var audioName = eAudio.audioName;
+        var bgmOperationType = eAudio.bgmOperationType;
+        var duration = eAudio.duration;
+
+        switch (audioType)
+        {
+            case EventAudio.AudioType.BGM:
+                switch (bgmOperationType)
+                {
+                    case EventAudio.BGMOperationType.Play:
+                        AudioManager.Instance.PlayBGM(audioName);
+                        break;
+                    case EventAudio.BGMOperationType.Stop:
+                        AudioManager.Instance.StopBGM(audioName);
+                        break;
+                    case EventAudio.BGMOperationType.FadeIn:
+                        AudioManager.Instance.FadeInBGM(audioName, duration);
+                        break;
+                    case EventAudio.BGMOperationType.FadeOut:
+                        AudioManager.Instance.FadeOutBGM(audioName, duration);
+                        break;
+                    default:
+                        Debug.LogWarning("AudioManager ERROR!!");
+                        break;
+                }
+                break;
+            case EventAudio.AudioType.SE:
+                AudioManager.Instance.PlaySE(audioName);
+                break;
+            default:
+                Debug.LogWarning("AudioManager ERROR!!");
+                break;
+        }
+
+        currentEvent.Processing = false;
+    }
+
 
     //Label Event Implemention
     private void LabelEvent()
@@ -408,7 +462,7 @@ public class Intepreter : SerializedMonoBehaviour {
         Debug.LogWarning("The label: " + eJump.toLabelName + " was not found!!");
         eJump.Processing = false;
     }
-    #endregion
+
 
 
     //Custom Script Event Implemention
@@ -418,11 +472,13 @@ public class Intepreter : SerializedMonoBehaviour {
         AsyncCallback callback = new AsyncCallback(CustomAsyncResult);
         //parameters
         object o = new object();
-        eCustom.func.BeginInvoke(callback,o);
+        eCustom.func.BeginInvoke(callback, o);
     }
     private void CustomAsyncResult(IAsyncResult ar)
     {
         Debug.Log("Delegate Activated");
     }
+
+    #endregion
 }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScenePrepare : MonoBehaviour {
 
@@ -17,6 +18,10 @@ public class ScenePrepare : MonoBehaviour {
         //The UI Canvas
         DontDestroyOnLoad(dialogCanvas);
         GameManager.Instance.ToTitle();
-	}
+        Button button = GameObject.Find("ContinueButton").GetComponent<Button>();
+        //Continue Event
+        button.onClick.AddListener(EventManager.Instance.TryContinueDialog);
+          
+    }
 	
 }

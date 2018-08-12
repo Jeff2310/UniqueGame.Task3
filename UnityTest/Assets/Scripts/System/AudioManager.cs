@@ -59,6 +59,7 @@ public class AudioManager : Singleton<AudioManager> {
 
     public void PlaySE(string name)
     {
+        bool find = false;
         foreach (var s in SEs)
         {
             if (s.name == name)
@@ -66,9 +67,14 @@ public class AudioManager : Singleton<AudioManager> {
                 s.source.Play();
             }
         }
+        if (!find)
+        {
+            Debug.LogWarning("SE " + name + " was no found!!");
+        }
     }
     public void PlayBGM(string name ,bool loop=true)
     {
+        bool find = false;
         foreach (var bgm in BGMs)
         {
             if (bgm.name == name)
@@ -77,9 +83,14 @@ public class AudioManager : Singleton<AudioManager> {
                 bgm.source.Play();
             }
         }
+        if (!find)
+        {
+            Debug.LogWarning("BGM " + name + " was no found!!");
+        }
     }
     public void StopBGM(string name)
     {
+        bool find = false;
         foreach (var s in SEs)
         {
             if (s.name == name)
@@ -88,10 +99,15 @@ public class AudioManager : Singleton<AudioManager> {
                 s.source.loop = false;
             }
         }
+        if (!find)
+        {
+            Debug.LogWarning("BGM " + name + " was no found!!");
+        }
     }
 
     public void FadeInBGM(string name,int duration,bool loop = true)
     {
+        bool find = false;
         foreach (var s in BGMs)
         {
             if (s.name == name)
@@ -99,18 +115,28 @@ public class AudioManager : Singleton<AudioManager> {
                 StartCoroutine(FadeIn(s.source, duration));
                 s.source.loop = loop;
                 s.source.Play();
+                find = true;
             }
+        }
+        if (!find)
+        {
+            Debug.LogWarning("BGM " + name + " was no found!!");
         }
     }
 
     public void FadeOutBGM(string name, int duration)
     {
+        bool find = false;
         foreach (var bgm in BGMs)
         {
             if (bgm.name == name)
             {
                 StartCoroutine(FadeOut(bgm.source, duration));
             }
+        }
+        if (!find)
+        {
+            Debug.LogWarning("BGM " + name + " was no found!!");
         }
     }
 
